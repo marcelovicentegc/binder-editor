@@ -6,7 +6,6 @@
     "fix": "npm run prettier -- --write",
     "prettier": "prettier \"**/*.{js,css,scss,json,md,ts,tsx,html,yml}\" --ignore-path=.eslintignore",
     "test": "npm run test:app",
-    "test:app": "react-scripts test --env=jsdom --passWithNoTests",
     "test:code": "npm run prettier -- --list-different"
   },
   "version": "1.0.0",

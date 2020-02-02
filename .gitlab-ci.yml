@@ -13,7 +13,7 @@ Audit:
   script:
     - npm audit
 
-Static test:
+Static Test:
   stage: check
   before_script:
     - npm ci
@@ -27,18 +27,10 @@ Build:
   script:
     - npm run build
 
-Unit Test:
-  stage: test
-  allow_failure: false
-  before_script:
-    - npm ci
-  script:
-    - npm run test:app
-
 Deploy (NPM):
   stage: deploy
   dependencies:
-    - Unit Test
+    - Build
   only:
     - master
   before_script:
