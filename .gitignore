@@ -1,11 +1,8 @@
 .DS_Store
 .vscode
 *.log
-build
+dist
 logs
 node_modules
 npm-debug.log*
 static
-yarn-debug.log*
-yarn-error.log*
-yarn.lock
