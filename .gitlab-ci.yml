@@ -1,0 +1,49 @@
+image: node:12
+
+stages:
+  - check
+  - build
+  - test
+  - analyze
+  - deploy
+
+Audit:
+  stage: check
+  before_script:
+    - npm ci
+  script:
+    - npm audit
+
+Static test:
+  stage: check
+  before_script:
+    - npm ci
+  script:
+    - npm run test:code
+
+Build:
+  stage: build
+  before_script:
+    - npm ci
+  script:
+    - npm run build
+
+Unit Test:
+  stage: test
+  allow_failure: false
+  before_script:
+    - npm ci
+  script:
+    - npm run test:app
+
+Deploy (NPM):
+  stage: deploy
+  dependencies:
+    - Analyze Commit
+  only:
+    - master
+  script:
+    - npm ci
+    - npm version 1.0.$CI_PIPELINE_ID || true
+    - npm run build
+    - npm publish
