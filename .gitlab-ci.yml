@@ -41,7 +41,12 @@ Deploy (NPM):
     - Unit Test
   only:
     - master
-  script:
+  environment:
+    NPM_TOKEN: $NPM_TOKEN
+    GH_TOKEN: $GH_TOKEN
+  before_script:
+    - echo '//registry.npmjs.org/:_authToken=$NPM_TOKEN' > .npmrc
     - npm ci
     - npm run build
+  script:
     - npm publish
