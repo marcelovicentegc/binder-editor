@@ -4,7 +4,6 @@ stages:
   - check
   - build
   - test
-  - analyze
   - deploy
 
 Audit:
@@ -44,6 +43,5 @@ Deploy (NPM):
     - master
   script:
     - npm ci
-    - npm version 1.0.$CI_PIPELINE_ID || true
     - npm run build
     - npm publish
