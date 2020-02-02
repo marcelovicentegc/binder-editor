@@ -2,7 +2,7 @@
   "name": "binder-editor",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.json",
-    "postbuild": "copyfiles --flat **/*/*.css dist/components",
+    "postbuild": "cross-env copyfiles --flat **/*/*.css dist/components && cp -r ./example/public/locales dist/locales",
     "start": "cross-env NODE_ENV=development webpack-dev-server --progress",
     "fix": "npm run prettier -- --write",
     "prettier": "prettier \"**/*.{js,css,scss,json,md,ts,tsx,html,yml}\" --ignore-path=.eslintignore",
