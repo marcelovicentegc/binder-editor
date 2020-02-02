@@ -39,7 +39,7 @@ Unit Test:
 Deploy (NPM):
   stage: deploy
   dependencies:
-    - Analyze Commit
+    - Unit Test
   only:
     - master
   script:
