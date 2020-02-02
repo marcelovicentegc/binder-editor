@@ -14,8 +14,8 @@
     "type": "git",
     "url": "https://github.com/marcelovicentegc/binder-editor.git"
   },
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
