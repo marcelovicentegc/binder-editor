@@ -1,0 +1,19 @@
+.ProjectName {
+  display: inline-block;
+  cursor: pointer;
+  border: none;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  padding: 0 0.5rem;
+  white-space: nowrap;
+  border-radius: var(--space-factor);
+}
+
+.ProjectName:hover {
+  background-color: #eee;
+}
+
+.ProjectName:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px steelblue;
+}
