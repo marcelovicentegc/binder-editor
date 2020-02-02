@@ -9,7 +9,7 @@ const PORT = 4000;
 module.exports = {
   context: __dirname,
   mode: process.env.NODE_ENV,
-  entry: "./src/index.tsx",
+  entry: "./example/index.tsx",
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist/"),
@@ -25,10 +25,13 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "public", "index.html"),
+      template: path.resolve(__dirname, "example", "public", "index.html"),
       filename: "index.html",
     }),
-    new CopyWebpackPlugin([{ from: "public/pwa" }, { from: "public/fonts" }]),
+    new CopyWebpackPlugin([
+      { from: "example/public/pwa" },
+      { from: "example/public/fonts" },
+    ]),
     new ManifestWebpackPlugin({
       fileName: "asset-manifest.json", // Not to confuse with manifest.json
     }),

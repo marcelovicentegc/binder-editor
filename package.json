@@ -6,7 +6,8 @@
     "fix": "npm run prettier -- --write",
     "prettier": "prettier \"**/*.{js,css,scss,json,md,ts,tsx,html,yml}\" --ignore-path=.eslintignore",
     "test": "npm run test:app",
-    "test:code": "npm run prettier -- --list-different"
+    "test:code": "npm run prettier -- --list-different",
+    "lint": "npm run lint --max-warnings=0"
   },
   "version": "1.0.2",
   "license": "MIT",
@@ -16,6 +17,9 @@
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -43,6 +47,8 @@
     "@types/nanoid": "2.1.0",
     "@types/react": "16.9.19",
     "@types/react-dom": "16.9.5",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
     "copy-webpack-plugin": "^5.1.1",
     "cross-env": "^7.0.0",
     "css-loader": "^3.4.2",
@@ -67,7 +73,18 @@
     "webpack-manifest-plugin": "^2.2.0"
   },
   "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2019,
+      "sourceType": "module"
+    },
     "rules": {
+      "no-use-before-define": "off",
+      "no-unused-vars": "off",
+      "prefer-const": "off",
       "no-console": [
         "warn",
         {

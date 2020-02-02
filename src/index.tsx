@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 
 import rough from "roughjs/bin/rough";
 import { RoughCanvas } from "roughjs/bin/canvas";
@@ -104,20 +103,6 @@ const { history } = createHistory();
 
 const CANVAS_WINDOW_OFFSET_LEFT = 0;
 const CANVAS_WINDOW_OFFSET_TOP = 0;
-
-function resetCursor() {
-  document.documentElement.style.cursor = "";
-}
-
-function setCursorForShape(shape: string) {
-  if (shape === "selection") {
-    resetCursor();
-  } else {
-    document.documentElement.style.cursor =
-      shape === "text" ? CURSOR_TYPE.TEXT : CURSOR_TYPE.CROSSHAIR;
-  }
-}
-
 const DRAGGING_THRESHOLD = 10; // 10px
 const ELEMENT_SHIFT_TRANSLATE_AMOUNT = 5;
 const ELEMENT_TRANSLATE_AMOUNT = 1;
@@ -132,6 +117,19 @@ const MOUSE_BUTTON = {
   WHEEL: 1,
   SECONDARY: 2,
 };
+
+function resetCursor() {
+  document.documentElement.style.cursor = "";
+}
+
+function setCursorForShape(shape: string) {
+  if (shape === "selection") {
+    resetCursor();
+  } else {
+    document.documentElement.style.cursor =
+      shape === "text" ? CURSOR_TYPE.TEXT : CURSOR_TYPE.CROSSHAIR;
+  }
+}
 
 let lastCanvasWidth = -1;
 let lastCanvasHeight = -1;
@@ -166,11 +164,11 @@ function pickAppStatePropertiesForHistory(
 
 let cursorX = 0;
 let cursorY = 0;
-let isHoldingSpace: boolean = false;
-let isPanning: boolean = false;
-let isHoldingMouseButton: boolean = false;
+let isHoldingSpace = false;
+let isPanning = false;
+let isHoldingMouseButton = false;
 
-export class App extends React.Component<any, AppState> {
+export class BinderEditor extends React.Component<any, AppState> {
   canvas: HTMLCanvasElement | null = null;
   rc: RoughCanvas | null = null;
 
@@ -262,7 +260,6 @@ export class App extends React.Component<any, AppState> {
   public shouldComponentUpdate(props: any, nextState: AppState) {
     if (!history.isRecording()) {
       // temporary hack to fix #592
-      // eslint-disable-next-line react/no-direct-mutation-state
       this.state = nextState;
       this.componentDidUpdate();
       return false;
@@ -826,8 +823,8 @@ export class App extends React.Component<any, AppState> {
                 document.documentElement.style.cursor = CURSOR_TYPE.GRABBING;
                 let { clientX: lastX, clientY: lastY } = e;
                 const onMouseMove = (e: MouseEvent) => {
-                  let deltaX = lastX - e.clientX;
-                  let deltaY = lastY - e.clientY;
+                  const deltaX = lastX - e.clientX;
+                  const deltaY = lastY - e.clientY;
                   lastX = e.clientX;
                   lastY = e.clientY;
                   // We don't want to save history when panning around
@@ -1911,9 +1908,7 @@ export class App extends React.Component<any, AppState> {
   }
 }
 
-const rootElement = document.getElementById("root");
-
-class TopErrorBoundary extends React.Component {
+export class TopErrorBoundary extends React.Component {
   state = { hasError: false, stack: "", localStorage: "" };
 
   static getDerivedStateFromError(error: any) {
@@ -2002,10 +1997,3 @@ class TopErrorBoundary extends React.Component {
     return this.props.children;
   }
 }
-
-ReactDOM.render(
-  <TopErrorBoundary>
-    <App />
-  </TopErrorBoundary>,
-  rootElement,
-);
