@@ -42,7 +42,7 @@ Deploy (NPM):
   only:
     - master
   before_script:
-    - echo '//registry.npmjs.org/:_authToken=$NPM_TOKEN' > .npmrc
+    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
     - npm ci
     - npm run build
   script:
