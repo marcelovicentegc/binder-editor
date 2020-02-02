@@ -24,8 +24,10 @@ Build:
   stage: build
   before_script:
     - npm ci
+    - npm i -g copyfiles
   script:
     - npm run build
+    - npm run postbuild
 
 Deploy (NPM):
   stage: deploy
@@ -36,5 +38,7 @@ Deploy (NPM):
   script:
     - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
     - npm ci
+    - npm i -g copyfiles
     - npm run build
+    - npm run postbuild
     - npm publish
