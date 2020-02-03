@@ -1,4 +1,4 @@
-import "./ToolIcon.module.scss";
+import "./ToolIcon.css";
 
 import React from "react";
 

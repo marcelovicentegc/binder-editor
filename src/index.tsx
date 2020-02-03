@@ -57,7 +57,7 @@ import { createHistory } from "./history";
 
 import ContextMenu from "./components/ContextMenu";
 
-import "./styles.module.scss";
+import "./styles.css";
 import { getElementWithResizeHandler } from "./element/resizeTest";
 import {
   ActionManager,
