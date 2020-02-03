@@ -10,7 +10,7 @@
     "test:code": "npm run prettier -- --list-different",
     "lint": "npm run lint --max-warnings=0"
   },
-  "version": "1.0.8",
+  "version": "1.0.9",
   "license": "MIT",
   "repository": {
     "type": "git",
