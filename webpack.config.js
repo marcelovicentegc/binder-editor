@@ -28,10 +28,7 @@ module.exports = {
       template: path.resolve(__dirname, "example", "public", "index.html"),
       filename: "index.html",
     }),
-    new CopyWebpackPlugin([
-      { from: "example/public/pwa" },
-      { from: "example/public/fonts" },
-    ]),
+    new CopyWebpackPlugin([{ from: "example/public" }]),
     new ManifestWebpackPlugin({
       fileName: "asset-manifest.json", // Not to confuse with manifest.json
     }),

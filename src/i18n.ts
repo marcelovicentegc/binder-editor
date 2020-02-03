@@ -1,16 +1,51 @@
 import LanguageDetector from "i18next-browser-languagedetector";
 
 export const languages = [
-  { lng: "en", label: "English", data: require("./locales/en.json") },
-  { lng: "de", label: "Deutsch", data: require("./locales/de.json") },
-  { lng: "es", label: "Español", data: require("./locales/es.json") },
-  { lng: "fr", label: "Français", data: require("./locales/fr.json") },
-  { lng: "pt", label: "Português", data: require("./locales/pt.json") },
-  { lng: "ru", label: "Русский", data: require("./locales/ru.json") },
+  {
+    lng: "en",
+    label: "English",
+    data: require("./locales/en.json"),
+  },
+  {
+    lng: "de",
+    label: "Deutsch",
+    data: require("./locales/de.json"),
+  },
+  {
+    lng: "es",
+    label: "Español",
+    data: require("./locales/es.json"),
+  },
+  {
+    lng: "fr",
+    label: "Français",
+    data: require("./locales/fr.json"),
+  },
+  {
+    lng: "pt",
+    label: "Português",
+    data: require("./locales/pt.json"),
+  },
+  {
+    lng: "ru",
+    label: "Русский",
+    data: require("./locales/ru.json"),
+  },
 ];
 
 let currentLanguage = languages[0];
 const fallbackLanguage = languages[0];
+
+const languageDetector = new LanguageDetector();
+languageDetector.init({
+  languageUtils: {
+    formatLanguageCode: function(lng: string) {
+      return lng;
+    },
+    isWhitelisted: () => true,
+  },
+  checkWhitelist: false,
+});
 
 export function setLanguage(newLng: string | undefined) {
   currentLanguage =
@@ -53,16 +88,5 @@ export function t(path: string, replacement?: { [key: string]: string }) {
   }
   return translation;
 }
-
-const languageDetector = new LanguageDetector();
-languageDetector.init({
-  languageUtils: {
-    formatLanguageCode: function(lng: string) {
-      return lng;
-    },
-    isWhitelisted: () => true,
-  },
-  checkWhitelist: false,
-});
 
 setLanguage(languageDetector.detect());
