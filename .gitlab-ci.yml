@@ -41,4 +41,4 @@ Deploy (NPM):
     - npm i -g copyfiles
     - npm run build
     - npm run postbuild
-    - npm publish
+    - npm publish --access public
