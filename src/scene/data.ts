@@ -21,7 +21,9 @@ const BACKEND_GET = "https://json.excalidraw.com/api/v1/";
 // TODO: Defined globally, since file handles aren't yet serializable.
 // Once `FileSystemFileHandle` can be serialized, make this
 // part of `AppState`.
-(typeof window !== "undefined" && (window as any)).handle = null;
+if (typeof window !== "undefined") {
+  (window as any).handle = null;
+}
 
 interface DataState {
   elements: readonly ExcalidrawElement[];
