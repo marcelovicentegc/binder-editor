@@ -6,7 +6,7 @@ import { AppState } from "../types";
 import { ExportType, PreviousScene } from "./types";
 import { exportToCanvas, exportToSvg } from "./export";
 import nanoid from "nanoid";
-import { fileOpen, fileSave } from "browser-nativefs";
+// import { fileOpen, fileSave } from "browser-nativefs";
 import { getCommonBounds } from "../element";
 
 import { Point } from "roughjs/bin/geometry";
@@ -69,14 +69,14 @@ export async function saveAsJSON(
   const serialized = serializeAsJSON(elements, appState);
 
   const name = `${appState.name}.json`;
-  await fileSave(
-    new Blob([serialized], { type: "application/json" }),
-    {
-      fileName: name,
-      description: "Excalidraw file",
-    },
-    (typeof window !== "undefined" && (window as any)).handle,
-  );
+  // await fileSave(
+  //   new Blob([serialized], { type: "application/json" }),
+  //   {
+  //     fileName: name,
+  //     description: "Excalidraw file",
+  //   },
+  //   (typeof window !== "undefined" && (window as any)).handle,
+  // );
 }
 
 function restore(
@@ -128,48 +128,47 @@ function restore(
 }
 
 export async function loadFromJSON() {
-  const updateAppState = (contents: string) => {
-    const defaultAppState = getDefaultAppState();
-    let elements = [];
-    let appState = defaultAppState;
-    try {
-      const data = JSON.parse(contents);
-      elements = data.elements || [];
-      appState = { ...defaultAppState, ...data.appState };
-    } catch (e) {
-      // Do nothing because elements array is already empty
-    }
-    return { elements, appState };
-  };
-
-  const blob = await fileOpen({
-    description: "Excalidraw files",
-    extensions: ["json"],
-    mimeTypes: ["application/json"],
-  });
-  if (blob.handle) {
-    (typeof window !== "undefined" && (window as any)).handle = blob.handle;
-  }
-  let contents;
-  if ("text" in Blob) {
-    contents = await blob.text();
-  } else {
-    contents = await (async () => {
-      return new Promise(resolve => {
-        const reader = new FileReader();
-        reader.readAsText(blob, "utf8");
-        reader.onloadend = () => {
-          if (reader.readyState === FileReader.DONE) {
-            resolve(reader.result as string);
-          }
-        };
-      });
-    })();
-  }
-  const { elements, appState } = updateAppState(contents);
-  return new Promise<DataState>(resolve => {
-    resolve(restore(elements, appState, { scrollToContent: true }));
-  });
+  // const updateAppState = (contents: string) => {
+  //   const defaultAppState = getDefaultAppState();
+  //   let elements = [];
+  //   let appState = defaultAppState;
+  //   try {
+  //     const data = JSON.parse(contents);
+  //     elements = data.elements || [];
+  //     appState = { ...defaultAppState, ...data.appState };
+  //   } catch (e) {
+  //     // Do nothing because elements array is already empty
+  //   }
+  //   return { elements, appState };
+  // };
+  // const blob = await fileOpen({
+  //   description: "Excalidraw files",
+  //   extensions: ["json"],
+  //   mimeTypes: ["application/json"],
+  // });
+  // if (blob.handle) {
+  //   (typeof window !== "undefined" && (window as any)).handle = blob.handle;
+  // }
+  // let contents;
+  // if ("text" in Blob) {
+  //   contents = await blob.text();
+  // } else {
+  //   contents = await (async () => {
+  //     return new Promise(resolve => {
+  //       const reader = new FileReader();
+  //       reader.readAsText(blob, "utf8");
+  //       reader.onloadend = () => {
+  //         if (reader.readyState === FileReader.DONE) {
+  //           resolve(reader.result as string);
+  //         }
+  //       };
+  //     });
+  //   })();
+  // }
+  // const { elements, appState } = updateAppState(contents);
+  // return new Promise<DataState>(resolve => {
+  //   resolve(restore(elements, appState, { scrollToContent: true }));
+  // });
 }
 
 export async function exportToBackend(
@@ -264,9 +263,9 @@ export async function exportCanvas(
       viewBackgroundColor,
       exportPadding,
     });
-    await fileSave(new Blob([tempSvg.outerHTML], { type: "image/svg+xml" }), {
-      fileName: `${name}.svg`,
-    });
+    // await fileSave(new Blob([tempSvg.outerHTML], { type: "image/svg+xml" }), {
+    //   fileName: `${name}.svg`,
+    // });
     return;
   }
 
@@ -283,9 +282,9 @@ export async function exportCanvas(
     const fileName = `${name}.png`;
     tempCanvas.toBlob(async (blob: any) => {
       if (blob) {
-        await fileSave(blob, {
-          fileName: fileName,
-        });
+        // await fileSave(blob, {
+        //   fileName: fileName,
+        // });
       }
     });
   } else if (type === "clipboard") {

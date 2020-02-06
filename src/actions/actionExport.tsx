@@ -72,11 +72,12 @@ export const actionLoadScene: Action = {
       title={t("buttons.load")}
       aria-label={t("buttons.load")}
       onClick={() => {
-        loadFromJSON()
-          .then(({ elements, appState }) => {
-            updateData({ elements: elements, appState: appState });
-          })
-          .catch(err => console.error(err));
+        // loadFromJSON()
+        //   .then(({ elements, appState }) => {
+        //     updateData({ elements: elements, appState: appState });
+        //   })
+        //   .catch(err => console.error(err));
+        updateData;
       }}
     />
   ),
