@@ -1,5 +1,5 @@
 {
-  "name": "binder-editor",
+  "name": "@binder/editor",
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.json",
     "postbuild": "cross-env copyfiles --flat **/*/*.css dist/components && copyfiles --flat src/styles.css dist && copyfiles --flat ./src/locales/*.json dist/locales",
@@ -10,7 +10,7 @@
     "test:code": "npm run prettier -- --list-different",
     "lint": "npm run lint --max-warnings=0"
   },
-  "version": "1.0.9",
+  "version": "1.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
