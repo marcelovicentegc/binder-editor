@@ -21,7 +21,7 @@ const BACKEND_GET = "https://json.excalidraw.com/api/v1/";
 // TODO: Defined globally, since file handles aren't yet serializable.
 // Once `FileSystemFileHandle` can be serialized, make this
 // part of `AppState`.
-(window as any).handle = null;
+(typeof window !== "undefined" && (window as any)).handle = null;
 
 interface DataState {
   elements: readonly ExcalidrawElement[];
@@ -37,7 +37,7 @@ export function serializeAsJSON(
     {
       type: "excalidraw",
       version: 1,
-      source: window.location.origin,
+      source: typeof window !== "undefined" && window.location.origin,
       elements: elements.map(({ shape, isSelected, ...el }) => el),
       appState: cleanAppStateForExport(appState),
     },
@@ -55,8 +55,10 @@ export function calculateScrollCenter(
   const centerY = (y1 + y2) / 2;
 
   return {
-    scrollX: window.innerWidth / 2 - centerX,
-    scrollY: window.innerHeight / 2 - centerY,
+    scrollX:
+      typeof window !== "undefined" ? window.innerWidth / 2 - centerX : 0,
+    scrollY:
+      typeof window !== "undefined" ? window.innerHeight / 2 - centerY : 0,
   };
 }
 
@@ -73,186 +75,8 @@ export async function saveAsJSON(
       fileName: name,
       description: "Excalidraw file",
     },
-    (window as any).handle,
+    (typeof window !== "undefined" && (window as any)).handle,
   );
-}
-
-export async function loadFromJSON() {
-  const updateAppState = (contents: string) => {
-    const defaultAppState = getDefaultAppState();
-    let elements = [];
-    let appState = defaultAppState;
-    try {
-      const data = JSON.parse(contents);
-      elements = data.elements || [];
-      appState = { ...defaultAppState, ...data.appState };
-    } catch (e) {
-      // Do nothing because elements array is already empty
-    }
-    return { elements, appState };
-  };
-
-  const blob = await fileOpen({
-    description: "Excalidraw files",
-    extensions: ["json"],
-    mimeTypes: ["application/json"],
-  });
-  if (blob.handle) {
-    (window as any).handle = blob.handle;
-  }
-  let contents;
-  if ("text" in Blob) {
-    contents = await blob.text();
-  } else {
-    contents = await (async () => {
-      return new Promise(resolve => {
-        const reader = new FileReader();
-        reader.readAsText(blob, "utf8");
-        reader.onloadend = () => {
-          if (reader.readyState === FileReader.DONE) {
-            resolve(reader.result as string);
-          }
-        };
-      });
-    })();
-  }
-  const { elements, appState } = updateAppState(contents);
-  return new Promise<DataState>(resolve => {
-    resolve(restore(elements, appState, { scrollToContent: true }));
-  });
-}
-
-export async function exportToBackend(
-  elements: readonly ExcalidrawElement[],
-  appState: AppState,
-) {
-  let response;
-  try {
-    response = await fetch(BACKEND_POST, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: serializeAsJSON(elements, appState),
-    });
-    const json = await response.json();
-    if (json.id) {
-      const url = new URL(window.location.href);
-      url.searchParams.append("id", json.id);
-
-      await navigator.clipboard.writeText(url.toString());
-      window.alert(
-        t("alerts.copiedToClipboard", {
-          url: url.toString(),
-        }),
-      );
-    } else {
-      window.alert(t("alerts.couldNotCreateShareableLink"));
-    }
-  } catch (e) {
-    window.alert(t("alerts.couldNotCreateShareableLink"));
-    return;
-  }
-}
-
-export async function importFromBackend(id: string | null) {
-  let elements: readonly ExcalidrawElement[] = [];
-  let appState: AppState = getDefaultAppState();
-  const data = await fetch(`${BACKEND_GET}${id}.json`)
-    .then(response => {
-      if (!response.ok) {
-        window.alert(t("alerts.importBackendFailed"));
-      }
-      return response;
-    })
-    .then(response => response.clone().json());
-  if (data != null) {
-    try {
-      elements = data.elements || elements;
-      appState = data.appState || appState;
-    } catch (error) {
-      window.alert(t("alerts.importBackendFailed"));
-      console.error(error);
-    }
-  }
-  return restore(elements, appState, { scrollToContent: true });
-}
-
-export async function exportCanvas(
-  type: ExportType,
-  elements: readonly ExcalidrawElement[],
-  canvas: HTMLCanvasElement,
-  {
-    exportBackground,
-    exportPadding = 10,
-    viewBackgroundColor,
-    name,
-    scale = 1,
-  }: {
-    exportBackground: boolean;
-    exportPadding?: number;
-    viewBackgroundColor: string;
-    name: string;
-    scale?: number;
-  },
-) {
-  if (!elements.length)
-    return window.alert(t("alerts.cannotExportEmptyCanvas"));
-  // calculate smallest area to fit the contents in
-
-  if (type === "svg") {
-    const tempSvg = exportToSvg(elements, {
-      exportBackground,
-      viewBackgroundColor,
-      exportPadding,
-    });
-    await fileSave(new Blob([tempSvg.outerHTML], { type: "image/svg+xml" }), {
-      fileName: `${name}.svg`,
-    });
-    return;
-  }
-
-  const tempCanvas = exportToCanvas(elements, {
-    exportBackground,
-    viewBackgroundColor,
-    exportPadding,
-    scale,
-  });
-  tempCanvas.style.display = "none";
-  document.body.appendChild(tempCanvas);
-
-  if (type === "png") {
-    const fileName = `${name}.png`;
-    tempCanvas.toBlob(async (blob: any) => {
-      if (blob) {
-        await fileSave(blob, {
-          fileName: fileName,
-        });
-      }
-    });
-  } else if (type === "clipboard") {
-    const errorMsg = t("alerts.couldNotCopyToClipboard");
-    try {
-      tempCanvas.toBlob(async function(blob: any) {
-        try {
-          await navigator.clipboard.write([
-            new window.ClipboardItem({ "image/png": blob }),
-          ]);
-        } catch (err) {
-          window.alert(errorMsg);
-        }
-      });
-    } catch (err) {
-      window.alert(errorMsg);
-    }
-  } else if (type === "backend") {
-    const appState = getDefaultAppState();
-    if (exportBackground) {
-      appState.viewBackgroundColor = viewBackgroundColor;
-    }
-    exportToBackend(elements, appState);
-  }
-
-  // clean up the DOM
-  if (tempCanvas !== canvas) tempCanvas.remove();
 }
 
 function restore(
@@ -301,6 +125,195 @@ function restore(
     elements: elements,
     appState: savedState,
   };
+}
+
+export async function loadFromJSON() {
+  const updateAppState = (contents: string) => {
+    const defaultAppState = getDefaultAppState();
+    let elements = [];
+    let appState = defaultAppState;
+    try {
+      const data = JSON.parse(contents);
+      elements = data.elements || [];
+      appState = { ...defaultAppState, ...data.appState };
+    } catch (e) {
+      // Do nothing because elements array is already empty
+    }
+    return { elements, appState };
+  };
+
+  const blob = await fileOpen({
+    description: "Excalidraw files",
+    extensions: ["json"],
+    mimeTypes: ["application/json"],
+  });
+  if (blob.handle) {
+    (typeof window !== "undefined" && (window as any)).handle = blob.handle;
+  }
+  let contents;
+  if ("text" in Blob) {
+    contents = await blob.text();
+  } else {
+    contents = await (async () => {
+      return new Promise(resolve => {
+        const reader = new FileReader();
+        reader.readAsText(blob, "utf8");
+        reader.onloadend = () => {
+          if (reader.readyState === FileReader.DONE) {
+            resolve(reader.result as string);
+          }
+        };
+      });
+    })();
+  }
+  const { elements, appState } = updateAppState(contents);
+  return new Promise<DataState>(resolve => {
+    resolve(restore(elements, appState, { scrollToContent: true }));
+  });
+}
+
+export async function exportToBackend(
+  elements: readonly ExcalidrawElement[],
+  appState: AppState,
+) {
+  let response;
+  try {
+    response = await fetch(BACKEND_POST, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: serializeAsJSON(elements, appState),
+    });
+    const json = await response.json();
+    if (json.id) {
+      const url = new URL(
+        typeof window !== "undefined" ? window.location.href : "",
+      );
+      url.searchParams.append("id", json.id);
+
+      await navigator.clipboard.writeText(url.toString());
+      typeof window !== "undefined" &&
+        window.alert(
+          t("alerts.copiedToClipboard", {
+            url: url.toString(),
+          }),
+        );
+    } else {
+      typeof window !== "undefined" &&
+        window.alert(t("alerts.couldNotCreateShareableLink"));
+    }
+  } catch (e) {
+    typeof window !== "undefined" &&
+      window.alert(t("alerts.couldNotCreateShareableLink"));
+    return;
+  }
+}
+
+export async function importFromBackend(id: string | null) {
+  let elements: readonly ExcalidrawElement[] = [];
+  let appState: AppState = getDefaultAppState();
+  const data = await fetch(`${BACKEND_GET}${id}.json`)
+    .then(response => {
+      if (!response.ok) {
+        typeof window !== "undefined" &&
+          window.alert(t("alerts.importBackendFailed"));
+      }
+      return response;
+    })
+    .then(response => response.clone().json());
+  if (data != null) {
+    try {
+      elements = data.elements || elements;
+      appState = data.appState || appState;
+    } catch (error) {
+      typeof window !== "undefined" &&
+        window.alert(t("alerts.importBackendFailed"));
+      console.error(error);
+    }
+  }
+  return restore(elements, appState, { scrollToContent: true });
+}
+
+export async function exportCanvas(
+  type: ExportType,
+  elements: readonly ExcalidrawElement[],
+  canvas: HTMLCanvasElement,
+  {
+    exportBackground,
+    exportPadding = 10,
+    viewBackgroundColor,
+    name,
+    scale = 1,
+  }: {
+    exportBackground: boolean;
+    exportPadding?: number;
+    viewBackgroundColor: string;
+    name: string;
+    scale?: number;
+  },
+) {
+  if (!elements.length)
+    return (
+      typeof window !== "undefined" &&
+      window.alert(t("alerts.cannotExportEmptyCanvas"))
+    );
+  // calculate smallest area to fit the contents in
+
+  if (type === "svg") {
+    const tempSvg = exportToSvg(elements, {
+      exportBackground,
+      viewBackgroundColor,
+      exportPadding,
+    });
+    await fileSave(new Blob([tempSvg.outerHTML], { type: "image/svg+xml" }), {
+      fileName: `${name}.svg`,
+    });
+    return;
+  }
+
+  const tempCanvas = exportToCanvas(elements, {
+    exportBackground,
+    viewBackgroundColor,
+    exportPadding,
+    scale,
+  });
+  tempCanvas.style.display = "none";
+  document.body.appendChild(tempCanvas);
+
+  if (type === "png") {
+    const fileName = `${name}.png`;
+    tempCanvas.toBlob(async (blob: any) => {
+      if (blob) {
+        await fileSave(blob, {
+          fileName: fileName,
+        });
+      }
+    });
+  } else if (type === "clipboard") {
+    const errorMsg = t("alerts.couldNotCopyToClipboard");
+    try {
+      tempCanvas.toBlob(async function(blob: any) {
+        try {
+          typeof window !== "undefined" &&
+            (await navigator.clipboard.write([
+              new window.ClipboardItem({ "image/png": blob }),
+            ]));
+        } catch (err) {
+          typeof window !== "undefined" && window.alert(errorMsg);
+        }
+      });
+    } catch (err) {
+      typeof window !== "undefined" && window.alert(errorMsg);
+    }
+  } else if (type === "backend") {
+    const appState = getDefaultAppState();
+    if (exportBackground) {
+      appState.viewBackgroundColor = viewBackgroundColor;
+    }
+    exportToBackend(elements, appState);
+  }
+
+  // clean up the DOM
+  if (tempCanvas !== canvas) tempCanvas.remove();
 }
 
 export function restoreFromLocalStorage() {
