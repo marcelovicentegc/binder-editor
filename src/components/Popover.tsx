@@ -24,11 +24,13 @@ export function Popover({
       const element = popoverRef.current;
       const { x, y, width, height } = element.getBoundingClientRect();
 
-      const viewportWidth = window.innerWidth;
+      const viewportWidth =
+        typeof window !== "undefined" ? window.innerWidth : 0;
       if (x + width > viewportWidth) {
         element.style.left = viewportWidth - width + "px";
       }
-      const viewportHeight = window.innerHeight;
+      const viewportHeight =
+        typeof window !== "undefined" ? window.innerHeight : 0;
       if (y + height > viewportHeight) {
         element.style.top = viewportHeight - height + "px";
       }

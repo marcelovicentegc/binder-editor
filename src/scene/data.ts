@@ -318,8 +318,14 @@ export async function exportCanvas(
 }
 
 export function restoreFromLocalStorage() {
-  const savedElements = localStorage.getItem(LOCAL_STORAGE_KEY);
-  const savedState = localStorage.getItem(LOCAL_STORAGE_KEY_STATE);
+  const savedElements =
+    typeof localStorage !== "undefined"
+      ? localStorage.getItem(LOCAL_STORAGE_KEY)
+      : "";
+  const savedState =
+    typeof localStorage !== "undefined"
+      ? localStorage.getItem(LOCAL_STORAGE_KEY_STATE)
+      : "";
 
   let elements = [];
   if (savedElements) {
@@ -357,9 +363,10 @@ export function saveToLocalStorage(
  * @returns array
  */
 export function loadedScenes(): PreviousScene[] {
-  const storedPreviousScenes = localStorage.getItem(
-    LOCAL_STORAGE_SCENE_PREVIOUS_KEY,
-  );
+  const storedPreviousScenes =
+    typeof localStorage !== "undefined"
+      ? localStorage.getItem(LOCAL_STORAGE_SCENE_PREVIOUS_KEY)
+      : "";
   if (storedPreviousScenes) {
     try {
       return JSON.parse(storedPreviousScenes);

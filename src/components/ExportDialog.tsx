@@ -16,13 +16,17 @@ import { t } from "../i18n";
 import { KEYS } from "../keys";
 
 const probablySupportsClipboard =
+  typeof HTMLCanvasElement !== "undefined" &&
   "toBlob" in HTMLCanvasElement.prototype &&
   "clipboard" in navigator &&
   "write" in navigator.clipboard &&
   "ClipboardItem" in window;
 
 const scales = [1, 2, 3];
-const defaultScale = scales.includes(devicePixelRatio) ? devicePixelRatio : 1;
+const defaultScale =
+  typeof devicePixelRatio !== "undefined" && scales.includes(devicePixelRatio)
+    ? devicePixelRatio
+    : 1;
 
 type ExportCB = (
   elements: readonly ExcalidrawElement[],

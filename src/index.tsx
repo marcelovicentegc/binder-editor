@@ -657,8 +657,14 @@ export class BinderEditor extends React.Component<any, AppState> {
   }
 
   public render() {
-    const canvasWidth = window.innerWidth - CANVAS_WINDOW_OFFSET_LEFT;
-    const canvasHeight = window.innerHeight - CANVAS_WINDOW_OFFSET_TOP;
+    const canvasWidth =
+      typeof window !== "undefined"
+        ? window.innerWidth - CANVAS_WINDOW_OFFSET_LEFT
+        : 0;
+    const canvasHeight =
+      typeof window !== "undefined"
+        ? window.innerHeight - CANVAS_WINDOW_OFFSET_TOP
+        : 0;
 
     return (
       <div className="container">
@@ -718,8 +724,14 @@ export class BinderEditor extends React.Component<any, AppState> {
               width: canvasWidth,
               height: canvasHeight,
             }}
-            width={canvasWidth * window.devicePixelRatio}
-            height={canvasHeight * window.devicePixelRatio}
+            width={
+              canvasWidth *
+              (typeof window !== "undefined" ? window.devicePixelRatio : 0)
+            }
+            height={
+              canvasHeight *
+              (typeof window !== "undefined" ? window.devicePixelRatio : 0)
+            }
             ref={canvas => {
               if (this.canvas === null) {
                 this.canvas = canvas;
