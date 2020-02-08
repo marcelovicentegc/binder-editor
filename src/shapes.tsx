@@ -1,5 +1,17 @@
 import React from "react";
 
+Object.defineProperty(Array.prototype, "flat", {
+  value: function(depth: number) {
+    return this.reduce((flat: string, toFlatten: string) => {
+      return flat.concat(
+        Array.isArray(toFlatten) && depth > 1
+          ? ((toFlatten.flat(depth - 1) as unknown) as string)
+          : (toFlatten as string),
+      );
+    }, []);
+  },
+});
+
 // We inline font-awesome icons in order to save on js size rather than including the font awesome react library
 export const SHAPES = [
   {

@@ -1,5 +1,4 @@
 import React from "react";
-import "core-js";
 import rough from "roughjs/bin/rough";
 import { RoughCanvas } from "roughjs/bin/canvas";
 
