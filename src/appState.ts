@@ -3,6 +3,7 @@ import { getDateTime } from "./utils";
 
 const DEFAULT_PROJECT_NAME = `excalidraw-${getDateTime()}`;
 
+// Default editor settings
 export function getDefaultAppState(): AppState {
   return {
     draggingElement: null,

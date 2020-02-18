@@ -26,3 +26,13 @@ export type AppState = {
   name: string;
   selectedId?: string;
 };
+
+export interface BinderEditorProps {
+  actions?: {
+    backButton?: {
+      label: string;
+      buttonProps: React.HTMLProps<HTMLButtonElement>;
+    };
+  };
+  title: string;
+}

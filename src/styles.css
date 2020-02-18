@@ -12,12 +12,39 @@ body {
   color: var(--text-color-primary);
 }
 
+.header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: fixed;
+  height: 84px;
+  background: white;
+  top: 0;
+  left: 0;
+  right: 0;
+  flex-direction: row;
+}
+
+.header > .content {
+  margin: 36px 44px 0px 44px;
+  width: 100%;
+}
+
+.header > .content > .row {
+  display: flex;
+  align-items: center;
+}
+
+.header > .content > .row > span {
+  margin-left: 40px;
+}
+
 .container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   position: fixed;
-  top: 0;
+  top: 84px;
   bottom: 0;
   left: 0;
   right: 0;
