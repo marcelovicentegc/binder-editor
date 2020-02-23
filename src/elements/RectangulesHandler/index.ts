@@ -1,10 +1,10 @@
-import { ExcalidrawElement } from "./types";
-import { SceneScroll } from "../scene/types";
-import { getArrowAbsoluteBounds } from "./Bounds";
+import { ExcalidrawElement } from "../Types";
+import { SceneScroll } from "../../scene/types";
+import { getArrowAbsoluteBounds } from "../Bounds";
 
 type Sides = "n" | "s" | "w" | "e" | "nw" | "ne" | "sw" | "se";
 
-export function handlerRectangles(
+export function rectangulesHandler(
   element: ExcalidrawElement,
   { scrollX, scrollY }: SceneScroll,
 ) {

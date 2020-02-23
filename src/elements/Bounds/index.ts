@@ -1,4 +1,4 @@
-import { ExcalidrawElement } from "../types";
+import { ExcalidrawElement } from "../Types";
 import { rotate } from "../../math";
 import { Drawable } from "roughjs/bin/core";
 import { Point } from "roughjs/bin/geometry";
@@ -6,7 +6,15 @@ import { Point } from "roughjs/bin/geometry";
 export function getArrowAbsoluteBounds(element: ExcalidrawElement) {
   if (element.points.length < 2 || !element.shape) {
     const { minX, minY, maxX, maxY } = element.points.reduce(
-      (limits, [x, y]) => {
+      (
+        limits: {
+          minY: number;
+          minX: number;
+          maxX: number;
+          maxY: number;
+        },
+        [x, y],
+      ) => {
         limits.minY = Math.min(limits.minY, y);
         limits.minX = Math.min(limits.minX, x);
 

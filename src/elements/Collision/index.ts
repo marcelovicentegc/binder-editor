@@ -1,6 +1,6 @@
 import { distanceBetweenPointAndSegment } from "../../math";
 
-import { ExcalidrawElement } from "../types";
+import { ExcalidrawElement } from "../Types";
 import {
   getDiamondPoints,
   getElementAbsoluteCoords,

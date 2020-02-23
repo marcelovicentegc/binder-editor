@@ -1,4 +1,4 @@
-import { newElement } from "./newElement";
+import { newElement } from "../NewElement";
 
 export type ExcalidrawElement = ReturnType<typeof newElement>;
 export type ExcalidrawTextElement = ExcalidrawElement & {

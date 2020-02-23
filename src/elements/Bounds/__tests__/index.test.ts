@@ -1,5 +1,5 @@
 import { getElementAbsoluteCoords } from "..";
-import { ExcalidrawElement } from "../../types";
+import { ExcalidrawElement } from "../../Types";
 
 const _ce = ({ x, y, w, h }: { x: number; y: number; w: number; h: number }) =>
   ({

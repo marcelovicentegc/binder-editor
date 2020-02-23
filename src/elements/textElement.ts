@@ -1,5 +1,5 @@
 import { measureText } from "../utils";
-import { ExcalidrawTextElement } from "./types";
+import { ExcalidrawTextElement } from "./Types";
 
 export const redrawTextBoundingBox = (element: ExcalidrawTextElement) => {
   const metrics = measureText(element.text, element.font);

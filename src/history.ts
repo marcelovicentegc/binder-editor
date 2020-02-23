@@ -1,5 +1,5 @@
 import { AppState } from "./types";
-import { ExcalidrawElement } from "./elements/types";
+import { ExcalidrawElement } from "./elements/Types";
 
 class SceneHistory {
   private recording = true;

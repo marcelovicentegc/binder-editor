@@ -1,22 +1,22 @@
-import { ExcalidrawElement } from "./types";
+import { ExcalidrawElement } from "../Types";
 
-import { handlerRectangles } from "./handlerRectangles";
-import { SceneScroll } from "../scene/types";
+import { rectangulesHandler } from "../RectangulesHandler";
+import { SceneScroll } from "../../scene/types";
 
-type HandlerRectanglesRet = keyof ReturnType<typeof handlerRectangles>;
+type RectangulesHandlerRet = keyof ReturnType<typeof rectangulesHandler>;
 
 export function resizeTest(
   element: ExcalidrawElement,
   x: number,
   y: number,
   { scrollX, scrollY }: SceneScroll,
-): HandlerRectanglesRet | false {
+): RectangulesHandlerRet | false {
   if (!element.isSelected || element.type === "text") return false;
 
-  const handlers = handlerRectangles(element, { scrollX, scrollY });
+  const handlers = rectangulesHandler(element, { scrollX, scrollY });
 
   const filter = Object.keys(handlers).filter(key => {
-    const handler = handlers[key as HandlerRectanglesRet]!;
+    const handler = handlers[key as RectangulesHandlerRet]!;
     if (!handler) return false;
 
     return (
@@ -28,7 +28,7 @@ export function resizeTest(
   });
 
   if (filter.length > 0) {
-    return filter[0] as HandlerRectanglesRet;
+    return filter[0] as RectangulesHandlerRet;
   }
 
   return false;
@@ -95,8 +95,8 @@ export function getCursorForResizingElement(resizingElement: {
 
 export function normalizeResizeHandle(
   element: ExcalidrawElement,
-  resizeHandle: HandlerRectanglesRet,
-): HandlerRectanglesRet {
+  resizeHandle: RectangulesHandlerRet,
+): RectangulesHandlerRet {
   if (
     (element.width >= 0 && element.height >= 0) ||
     element.type === "line" ||

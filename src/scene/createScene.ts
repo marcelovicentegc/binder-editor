@@ -1,4 +1,4 @@
-import { ExcalidrawElement } from "../elements/types";
+import { ExcalidrawElement } from "../elements/Types";
 
 export const createScene = () => {
   const elements: readonly ExcalidrawElement[] = [];

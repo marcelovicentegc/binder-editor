@@ -39,7 +39,7 @@ import {
 
 import { renderScene } from "./renderer";
 import { AppState, BinderEditorProps } from "./types";
-import { ExcalidrawElement } from "./elements/types";
+import { ExcalidrawElement } from "./elements/Types";
 
 import {
   isInputLike,
@@ -57,7 +57,7 @@ import { createHistory } from "./history";
 import ContextMenu from "./components/ContextMenu";
 
 import "./styles.css";
-import { getElementWithResizeHandler } from "./elements/resizeTest";
+import { getElementWithResizeHandler } from "./elements/ResizeTest";
 import {
   ActionManager,
   actionDeleteSelected,

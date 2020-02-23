@@ -1,8 +1,8 @@
 import { RoughCanvas } from "roughjs/bin/canvas";
 import { RoughSVG } from "roughjs/bin/svg";
 
-import { ExcalidrawElement } from "../elements/types";
-import { getElementAbsoluteCoords, handlerRectangles } from "../elements";
+import { ExcalidrawElement } from "../elements/Types";
+import { getElementAbsoluteCoords, rectangulesHandler } from "../elements";
 
 import { roundRect } from "./roundRect";
 import { SceneState } from "../scene/types";
@@ -132,7 +132,7 @@ export function renderScene(
     });
 
     if (selectedElements.length === 1 && selectedElements[0].type !== "text") {
-      const handlers = handlerRectangles(selectedElements[0], sceneState);
+      const handlers = rectangulesHandler(selectedElements[0], sceneState);
       Object.values(handlers)
         .filter(handler => handler !== undefined)
         .forEach(handler => {

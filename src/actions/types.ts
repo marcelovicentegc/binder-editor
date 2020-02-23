@@ -1,5 +1,5 @@
 import React from "react";
-import { ExcalidrawElement } from "../elements/types";
+import { ExcalidrawElement } from "../elements/Types";
 import { AppState } from "../types";
 
 export type ActionResult = {

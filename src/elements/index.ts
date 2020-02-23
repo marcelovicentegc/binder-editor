@@ -1,4 +1,4 @@
-export { newElement, newTextElement, duplicateElement } from "./newElement";
+export { newElement, newTextElement, duplicateElement } from "./NewElement";
 export {
   getElementAbsoluteCoords,
   getCommonBounds,
@@ -8,13 +8,13 @@ export {
   getArrowAbsoluteBounds,
 } from "./Bounds";
 
-export { handlerRectangles } from "./handlerRectangles";
+export { rectangulesHandler } from "./RectangulesHandler";
 export { hitTest } from "./Collision";
 export {
   resizeTest,
   getCursorForResizingElement,
   normalizeResizeHandle,
-} from "./resizeTest";
+} from "./ResizeTest";
 export { isTextElement } from "./typeChecks";
 export { textWysiwyg } from "./textWysiwyg";
 export { redrawTextBoundingBox } from "./textElement";

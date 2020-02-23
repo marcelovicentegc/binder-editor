@@ -1,4 +1,4 @@
-import { ExcalidrawElement } from "./types";
+import { ExcalidrawElement } from "./Types";
 
 export function isInvisiblySmallElement(element: ExcalidrawElement): boolean {
   return element.width === 0 && element.height === 0;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Action } from "./types";
-import { ExcalidrawElement, ExcalidrawTextElement } from "../elements/types";
+import { ExcalidrawElement, ExcalidrawTextElement } from "../elements/Types";
 import { getCommonAttributeOfSelectedElements } from "../scene";
 import { ButtonSelect } from "../components/ButtonSelect";
 import { isTextElement, redrawTextBoundingBox } from "../elements";

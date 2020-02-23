@@ -1,4 +1,4 @@
-import { ExcalidrawElement } from "../elements/types";
+import { ExcalidrawElement } from "../elements/Types";
 import { getCommonBounds } from "../elements";
 
 const SCROLLBAR_MIN_SIZE = 15;

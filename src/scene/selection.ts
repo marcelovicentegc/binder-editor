@@ -1,4 +1,4 @@
-import { ExcalidrawElement } from "../elements/types";
+import { ExcalidrawElement } from "../elements/Types";
 import { getElementAbsoluteCoords } from "../elements";
 
 export function getElementsWithinSelection(
