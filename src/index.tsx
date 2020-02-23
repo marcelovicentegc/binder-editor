@@ -16,7 +16,7 @@ import {
   getPerfectElementSize,
   resizePerfectLineForNWHandler,
   normalizeDimensions,
-} from "./element";
+} from "./elements";
 import {
   clearSelection,
   deleteSelectedElements,
@@ -39,7 +39,7 @@ import {
 
 import { renderScene } from "./renderer";
 import { AppState, BinderEditorProps } from "./types";
-import { ExcalidrawElement } from "./element/types";
+import { ExcalidrawElement } from "./elements/types";
 
 import {
   isInputLike,
@@ -57,7 +57,7 @@ import { createHistory } from "./history";
 import ContextMenu from "./components/ContextMenu";
 
 import "./styles.css";
-import { getElementWithResizeHandler } from "./element/resizeTest";
+import { getElementWithResizeHandler } from "./elements/resizeTest";
 import {
   ActionManager,
   actionDeleteSelected,
@@ -90,7 +90,7 @@ import { Island } from "./components/Island";
 import Stack from "./components/Stack";
 import { FixedSideContainer } from "./components/FixedSideContainer";
 import { ToolButton } from "./components/ToolButton";
-import { LockIcon } from "./components/LockIcon";
+import { LockIcon } from "./components/ToolButton/LockIcon";
 import { ExportDialog } from "./components/ExportDialog";
 import { LanguageList } from "./components/LanguageList";
 import { Point } from "roughjs/bin/geometry";

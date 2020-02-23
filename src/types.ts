@@ -1,4 +1,4 @@
-import { ExcalidrawElement } from "./element/types";
+import { ExcalidrawElement } from "./elements/types";
 
 export type AppState = {
   draggingElement: ExcalidrawElement | null;

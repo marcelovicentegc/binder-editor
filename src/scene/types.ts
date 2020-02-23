@@ -1,4 +1,4 @@
-import { ExcalidrawTextElement } from "../element/types";
+import { ExcalidrawTextElement } from "../elements/types";
 
 export type SceneState = {
   scrollX: number;

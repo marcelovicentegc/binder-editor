@@ -1,8 +1,8 @@
 import { Action } from "./types";
-import { isTextElement, redrawTextBoundingBox } from "../element";
+import { isTextElement, redrawTextBoundingBox } from "../elements";
 import { KEYS } from "../keys";
 
-let copiedStyles: string = "{}";
+let copiedStyles = "{}";
 
 export const actionCopyStyles: Action = {
   name: "copyStyles",

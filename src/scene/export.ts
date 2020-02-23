@@ -1,6 +1,6 @@
 import rough from "roughjs/bin/rough";
-import { ExcalidrawElement } from "../element/types";
-import { getCommonBounds } from "../element/bounds";
+import { ExcalidrawElement } from "../elements/types";
+import { getCommonBounds } from "../elements/Bounds";
 import { renderScene, renderSceneToSvg } from "../renderer/renderScene";
 import { distance, SVG_NS } from "../utils";
 

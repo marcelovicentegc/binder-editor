@@ -6,10 +6,10 @@ export {
   getArrowPoints,
   getLinePoints,
   getArrowAbsoluteBounds,
-} from "./bounds";
+} from "./Bounds";
 
 export { handlerRectangles } from "./handlerRectangles";
-export { hitTest } from "./collision";
+export { hitTest } from "./Collision";
 export {
   resizeTest,
   getCursorForResizingElement,

@@ -1,9 +1,9 @@
 import React from "react";
 import { Action } from "./types";
-import { ExcalidrawElement, ExcalidrawTextElement } from "../element/types";
+import { ExcalidrawElement, ExcalidrawTextElement } from "../elements/types";
 import { getCommonAttributeOfSelectedElements } from "../scene";
 import { ButtonSelect } from "../components/ButtonSelect";
-import { isTextElement, redrawTextBoundingBox } from "../element";
+import { isTextElement, redrawTextBoundingBox } from "../elements";
 import { ColorPicker } from "../components/ColorPicker";
 import { AppState } from "../../src/types";
 import { t } from "../i18n";

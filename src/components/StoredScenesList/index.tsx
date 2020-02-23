@@ -1,6 +1,6 @@
 import React from "react";
-import { PreviousScene } from "../scene/types";
-import { t } from "../i18n";
+import { PreviousScene } from "../../scene/types";
+import { t } from "../../i18n";
 
 interface StoredScenesListProps {
   scenes: PreviousScene[];

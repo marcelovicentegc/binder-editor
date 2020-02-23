@@ -1,38 +1,7 @@
-import { ExcalidrawElement } from "./types";
-import { rotate } from "../math";
+import { ExcalidrawElement } from "../types";
+import { rotate } from "../../math";
 import { Drawable } from "roughjs/bin/core";
 import { Point } from "roughjs/bin/geometry";
-
-// If the element is created from right to left, the width is going to be negative
-// This set of functions retrieves the absolute position of the 4 points.
-// We can't just always normalize it since we need to remember the fact that an arrow
-// is pointing left or right.
-export function getElementAbsoluteCoords(element: ExcalidrawElement) {
-  if (element.type === "arrow") {
-    return getArrowAbsoluteBounds(element);
-  }
-  return [
-    element.width >= 0 ? element.x : element.x + element.width, // x1
-    element.height >= 0 ? element.y : element.y + element.height, // y1
-    element.width >= 0 ? element.x + element.width : element.x, // x2
-    element.height >= 0 ? element.y + element.height : element.y, // y2
-  ];
-}
-
-export function getDiamondPoints(element: ExcalidrawElement) {
-  // Here we add +1 to avoid these numbers to be 0
-  // otherwise rough.js will throw an error complaining about it
-  const topX = Math.floor(element.width / 2) + 1;
-  const topY = 0;
-  const rightX = element.width;
-  const rightY = Math.floor(element.height / 2) + 1;
-  const bottomX = topX;
-  const bottomY = element.height;
-  const leftX = topY;
-  const leftY = rightY;
-
-  return [topX, topY, rightX, rightY, bottomX, bottomY, leftX, leftY];
-}
 
 export function getArrowAbsoluteBounds(element: ExcalidrawElement) {
   if (element.points.length < 2 || !element.shape) {
@@ -117,6 +86,37 @@ export function getArrowAbsoluteBounds(element: ExcalidrawElement) {
     maxX + element.x,
     maxY + element.y,
   ];
+}
+
+// If the element is created from right to left, the width is going to be negative
+// This set of functions retrieves the absolute position of the 4 points.
+// We can't just always normalize it since we need to remember the fact that an arrow
+// is pointing left or right.
+export function getElementAbsoluteCoords(element: ExcalidrawElement) {
+  if (element.type === "arrow") {
+    return getArrowAbsoluteBounds(element);
+  }
+  return [
+    element.width >= 0 ? element.x : element.x + element.width, // x1
+    element.height >= 0 ? element.y : element.y + element.height, // y1
+    element.width >= 0 ? element.x + element.width : element.x, // x2
+    element.height >= 0 ? element.y + element.height : element.y, // y2
+  ];
+}
+
+export function getDiamondPoints(element: ExcalidrawElement) {
+  // Here we add +1 to avoid these numbers to be 0
+  // otherwise rough.js will throw an error complaining about it
+  const topX = Math.floor(element.width / 2) + 1;
+  const topY = 0;
+  const rightX = element.width;
+  const rightY = Math.floor(element.height / 2) + 1;
+  const bottomX = topX;
+  const bottomY = element.height;
+  const leftX = topY;
+  const leftY = rightY;
+
+  return [topX, topY, rightX, rightY, bottomX, bottomY, leftX, leftY];
 }
 
 export function getArrowPoints(element: ExcalidrawElement) {

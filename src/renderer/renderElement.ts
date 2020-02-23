@@ -1,10 +1,10 @@
-import { ExcalidrawElement } from "../element/types";
-import { isTextElement } from "../element/typeChecks";
+import { ExcalidrawElement } from "../elements/types";
+import { isTextElement } from "../elements/typeChecks";
 import {
   getDiamondPoints,
   getArrowPoints,
   getLinePoints,
-} from "../element/bounds";
+} from "../elements/Bounds";
 import { RoughCanvas } from "roughjs/bin/canvas";
 import { Drawable } from "roughjs/bin/core";
 import { Point } from "roughjs/bin/geometry";

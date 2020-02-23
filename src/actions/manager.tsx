@@ -5,7 +5,7 @@ import {
   UpdaterFn,
   ActionFilterFn,
 } from "./types";
-import { ExcalidrawElement } from "../element/types";
+import { ExcalidrawElement } from "../elements/types";
 import { AppState } from "../types";
 import { t } from "../i18n";
 

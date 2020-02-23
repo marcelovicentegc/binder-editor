@@ -1,8 +1,8 @@
 import { RoughCanvas } from "roughjs/bin/canvas";
 import { RoughSVG } from "roughjs/bin/svg";
 
-import { ExcalidrawElement } from "../element/types";
-import { getElementAbsoluteCoords, handlerRectangles } from "../element";
+import { ExcalidrawElement } from "../elements/types";
+import { getElementAbsoluteCoords, handlerRectangles } from "../elements";
 
 import { roundRect } from "./roundRect";
 import { SceneState } from "../scene/types";
@@ -13,6 +13,30 @@ import {
 } from "../scene/scrollbars";
 
 import { renderElement, renderElementToSvg } from "./renderElement";
+
+function isVisibleElement(
+  element: ExcalidrawElement,
+  scrollX: number,
+  scrollY: number,
+  canvasWidth: number,
+  canvasHeight: number,
+) {
+  let [x1, y1, x2, y2] = getElementAbsoluteCoords(element);
+  if (element.type !== "arrow") {
+    x1 += scrollX;
+    y1 += scrollY;
+    x2 += scrollX;
+    y2 += scrollY;
+    return x2 >= 0 && x1 <= canvasWidth && y2 >= 0 && y1 <= canvasHeight;
+  } else {
+    return (
+      x2 + scrollX >= 0 &&
+      x1 + scrollX <= canvasWidth &&
+      y2 + scrollY >= 0 &&
+      y1 + scrollY <= canvasHeight
+    );
+  }
+}
 
 export function renderScene(
   elements: readonly ExcalidrawElement[],
@@ -145,30 +169,6 @@ export function renderScene(
   }
 
   return atLeastOneVisibleElement;
-}
-
-function isVisibleElement(
-  element: ExcalidrawElement,
-  scrollX: number,
-  scrollY: number,
-  canvasWidth: number,
-  canvasHeight: number,
-) {
-  let [x1, y1, x2, y2] = getElementAbsoluteCoords(element);
-  if (element.type !== "arrow") {
-    x1 += scrollX;
-    y1 += scrollY;
-    x2 += scrollX;
-    y2 += scrollY;
-    return x2 >= 0 && x1 <= canvasWidth && y2 >= 0 && y1 <= canvasHeight;
-  } else {
-    return (
-      x2 + scrollX >= 0 &&
-      x1 + scrollX <= canvasWidth &&
-      y2 + scrollY >= 0 &&
-      y1 + scrollY <= canvasHeight
-    );
-  }
 }
 
 // This should be only called for exporting purposes

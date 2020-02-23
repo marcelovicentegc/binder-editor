@@ -1,6 +1,6 @@
-import { ExcalidrawElement } from "../element/types";
-import { hitTest } from "../element/collision";
-import { getElementAbsoluteCoords } from "../element";
+import { ExcalidrawElement } from "../elements/types";
+import { hitTest } from "../elements/Collision";
+import { getElementAbsoluteCoords } from "../elements";
 
 export const hasBackground = (type: string) =>
   type === "rectangle" || type === "ellipse" || type === "diamond";

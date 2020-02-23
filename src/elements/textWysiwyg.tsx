@@ -37,6 +37,26 @@ export function textWysiwyg({
   editable.innerText = initText;
   editable.dataset.type = "wysiwyg";
 
+  function stopEvent(ev: Event) {
+    ev.stopPropagation();
+  }
+
+  function cleanup() {
+    editable.onblur = null;
+    editable.onkeydown = null;
+    window.removeEventListener("wheel", stopEvent, true);
+    document.body.removeChild(editable);
+  }
+
+  function handleSubmit() {
+    if (editable.innerText) {
+      onSubmit(trimText(editable.innerText));
+    } else {
+      onCancel();
+    }
+    cleanup();
+  }
+
   Object.assign(editable.style, {
     color: strokeColor,
     position: "fixed",
@@ -75,26 +95,6 @@ export function textWysiwyg({
     }
   };
   editable.onblur = handleSubmit;
-
-  function stopEvent(ev: Event) {
-    ev.stopPropagation();
-  }
-
-  function handleSubmit() {
-    if (editable.innerText) {
-      onSubmit(trimText(editable.innerText));
-    } else {
-      onCancel();
-    }
-    cleanup();
-  }
-
-  function cleanup() {
-    editable.onblur = null;
-    editable.onkeydown = null;
-    window.removeEventListener("wheel", stopEvent, true);
-    document.body.removeChild(editable);
-  }
 
   window.addEventListener("wheel", stopEvent, true);
   document.body.appendChild(editable);

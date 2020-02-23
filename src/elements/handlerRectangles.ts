@@ -1,6 +1,6 @@
 import { ExcalidrawElement } from "./types";
 import { SceneScroll } from "../scene/types";
-import { getArrowAbsoluteBounds } from "./bounds";
+import { getArrowAbsoluteBounds } from "./Bounds";
 
 type Sides = "n" | "s" | "w" | "e" | "nw" | "ne" | "sw" | "se";
 

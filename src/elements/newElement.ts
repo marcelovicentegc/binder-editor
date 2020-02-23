@@ -3,7 +3,7 @@ import nanoid from "nanoid";
 import { Drawable } from "roughjs/bin/core";
 import { Point } from "roughjs/bin/geometry";
 
-import { ExcalidrawElement, ExcalidrawTextElement } from "../element/types";
+import { ExcalidrawElement, ExcalidrawTextElement } from "./types";
 import { measureText } from "../utils";
 
 export function newElement(

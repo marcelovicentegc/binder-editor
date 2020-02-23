@@ -1,4 +1,4 @@
-import { ExcalidrawElement } from "../element/types";
+import { ExcalidrawElement } from "../elements/types";
 
 import { getDefaultAppState, cleanAppStateForExport } from "../appState";
 
@@ -7,7 +7,7 @@ import { ExportType, PreviousScene } from "./types";
 import { exportToCanvas, exportToSvg } from "./export";
 import nanoid from "nanoid";
 // import { fileOpen, fileSave } from "browser-nativefs";
-import { getCommonBounds } from "../element";
+import { getCommonBounds } from "../elements";
 
 import { Point } from "roughjs/bin/geometry";
 import { t } from "../i18n";

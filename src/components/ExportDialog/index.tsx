@@ -6,7 +6,7 @@ import { Modal } from "../Modal";
 import { ToolButton } from "../ToolButton";
 import { clipboard, exportFile, link } from "../icons";
 import { Island } from "../Island";
-import { ExcalidrawElement } from "../../element/types";
+import { ExcalidrawElement } from "../../elements/types";
 import { AppState } from "../../types";
 import { exportToCanvas } from "../../scene/export";
 import { ActionsManagerInterface, UpdaterFn } from "../../actions/types";
