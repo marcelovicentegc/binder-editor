@@ -1,8 +1,8 @@
 import React from "react";
-import { Popover } from "./Popover";
+import { Popover } from "../Popover";
 import { render, unmountComponentAtNode } from "react-dom";
 
-import "./ContextMenu.css";
+import "./style.css";
 
 type ContextMenuOption = {
   label: string;

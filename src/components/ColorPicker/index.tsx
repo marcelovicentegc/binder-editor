@@ -1,9 +1,9 @@
 import React from "react";
-import { Popover } from "./Popover";
+import { Popover } from "../Popover";
 
-import "./ColorPicker.css";
-import { KEYS } from "../keys";
-import { t } from "../i18n";
+import "./style.css";
+import { KEYS } from "../../keys";
+import { t } from "../../i18n";
 
 // https://yeun.github.io/open-color/
 const colors = {

@@ -1,19 +1,19 @@
-import "./ExportDialog.css";
+import "./style.css";
 
 import React, { useState, useEffect, useRef } from "react";
 
-import { Modal } from "./Modal";
-import { ToolButton } from "./ToolButton";
-import { clipboard, exportFile, link } from "./icons";
-import { Island } from "./Island";
-import { ExcalidrawElement } from "../element/types";
-import { AppState } from "../types";
-import { exportToCanvas } from "../scene/export";
-import { ActionsManagerInterface, UpdaterFn } from "../actions/types";
-import Stack from "./Stack";
-import { t } from "../i18n";
+import { Modal } from "../Modal";
+import { ToolButton } from "../ToolButton";
+import { clipboard, exportFile, link } from "../icons";
+import { Island } from "../Island";
+import { ExcalidrawElement } from "../../element/types";
+import { AppState } from "../../types";
+import { exportToCanvas } from "../../scene/export";
+import { ActionsManagerInterface, UpdaterFn } from "../../actions/types";
+import Stack from "../Stack";
+import { t } from "../../i18n";
 
-import { KEYS } from "../keys";
+import { KEYS } from "../../keys";
 
 const probablySupportsClipboard =
   typeof HTMLCanvasElement !== "undefined" &&

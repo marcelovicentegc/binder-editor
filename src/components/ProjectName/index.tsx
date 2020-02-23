@@ -1,7 +1,7 @@
-import "./ProjectName.css";
+import "./style.css";
 
 import React, { Component } from "react";
-import { selectNode, removeSelection } from "../utils";
+import { selectNode, removeSelection } from "../../utils";
 
 type Props = {
   value: string;

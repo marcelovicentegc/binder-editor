@@ -1,8 +1,23 @@
-import "./Modal.css";
+import "./style.css";
 
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { KEYS } from "../keys";
+import { KEYS } from "../../keys";
+
+function useBodyRoot() {
+  function createDiv() {
+    const div = document.createElement("div");
+    document.body.appendChild(div);
+    return div;
+  }
+  const [div] = useState(createDiv);
+  useEffect(() => {
+    return () => {
+      document.body.removeChild(div);
+    };
+  }, [div]);
+  return div;
+}
 
 export function Modal(props: {
   children: React.ReactNode;
@@ -33,19 +48,4 @@ export function Modal(props: {
     </div>,
     modalRoot,
   );
-}
-
-function useBodyRoot() {
-  function createDiv() {
-    const div = document.createElement("div");
-    document.body.appendChild(div);
-    return div;
-  }
-  const [div] = useState(createDiv);
-  useEffect(() => {
-    return () => {
-      document.body.removeChild(div);
-    };
-  }, [div]);
-  return div;
 }
