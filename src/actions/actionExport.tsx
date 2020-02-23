@@ -2,7 +2,7 @@ import React from "react";
 import { Action } from "./types";
 import { ProjectName } from "../components/ProjectName";
 import { saveAsJSON, loadFromJSON } from "../scene";
-import { load, save } from "../components/icons";
+import { load, save } from "../components/Icons";
 import { ToolButton } from "../components/ToolButton";
 import { t } from "../i18n";
 

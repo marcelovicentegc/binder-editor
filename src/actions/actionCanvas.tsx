@@ -2,7 +2,7 @@ import React from "react";
 import { Action } from "./types";
 import { ColorPicker } from "../components/ColorPicker";
 import { getDefaultAppState } from "../appState";
-import { trash } from "../components/icons";
+import { trash } from "../components/Icons";
 import { ToolButton } from "../components/ToolButton";
 import { t } from "../i18n";
 

@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { Modal } from "../Modal";
 import { ToolButton } from "../ToolButton";
-import { clipboard, exportFile, link } from "../icons";
+import { clipboard, exportFile, link } from "../Icons";
 import { Island } from "../Island";
 import { ExcalidrawElement } from "../../elements/Types";
 import { AppState } from "../../types";
