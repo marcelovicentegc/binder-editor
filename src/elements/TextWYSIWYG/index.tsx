@@ -1,5 +1,5 @@
-import { KEYS } from "../keys";
-import { selectNode } from "../utils";
+import { KEYS } from "../../keys";
+import { selectNode } from "../../utils";
 
 type TextWysiwygParams = {
   initText: string;

@@ -15,12 +15,12 @@ export {
   getCursorForResizingElement,
   normalizeResizeHandle,
 } from "./ResizeTest";
-export { isTextElement } from "./typeChecks";
-export { textWysiwyg } from "./textWysiwyg";
-export { redrawTextBoundingBox } from "./textElement";
+export { isTextElement } from "./TypeChecks";
+export { textWysiwyg } from "./TextWYSIWYG";
+export { redrawTextBoundingBox } from "./TextElement";
 export {
   getPerfectElementSize,
   isInvisiblySmallElement,
   resizePerfectLineForNWHandler,
   normalizeDimensions,
-} from "./sizeHelpers";
+} from "./SizeHelpers";

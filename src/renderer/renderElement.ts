@@ -1,5 +1,5 @@
 import { ExcalidrawElement } from "../elements/Types";
-import { isTextElement } from "../elements/typeChecks";
+import { isTextElement } from "../elements/TypeChecks";
 import {
   getDiamondPoints,
   getArrowPoints,

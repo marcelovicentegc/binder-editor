@@ -1,4 +1,4 @@
-import { ExcalidrawElement, ExcalidrawTextElement } from "./Types";
+import { ExcalidrawElement, ExcalidrawTextElement } from "../Types";
 
 export function isTextElement(
   element: ExcalidrawElement,
