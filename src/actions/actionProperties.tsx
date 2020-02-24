@@ -11,7 +11,7 @@ import { ColorPicker } from "../components/ColorPicker";
 import { AppState } from "../../src/types";
 import { t } from "../i18n";
 
-const changeProperty = (
+export const changeElementProperty = (
   elements: readonly BinderEditorElement[],
   callback: (element: BinderEditorElement) => BinderEditorElement,
 ) => {
@@ -23,26 +23,56 @@ const changeProperty = (
   });
 };
 
-const getFormValue = function<T>(
+export const getFormValue = function<T>(
   editingElement: AppState["editingElement"],
   elements: readonly BinderEditorElement[],
   getAttribute: (element: BinderEditorElement) => T,
   defaultValue?: T,
-): T | null {
+): T | string {
   return (
     (editingElement && getAttribute(editingElement)) ??
     (elements.some(element => element.isSelected)
       ? getCommonAttributeOfSelectedElements(elements, getAttribute)
       : defaultValue) ??
-    null
+    ""
   );
+};
+
+export const actionChangeTextColor: Action = {
+  name: "changeTextColor",
+  perform: (elements, appState, value) => {
+    return {
+      elements: changeElementProperty(elements, el => ({
+        ...el,
+        shape: null,
+        currentTextColor: value,
+      })),
+      appState: { ...appState, currentTextColor: value },
+    };
+  },
+  // PanelComponent: ({ elements, appState, updateData }) => (
+  //   <>
+  //     <h3 aria-hidden="true">{t("labels.stroke")}</h3>
+  //     <ColorPicker
+  //       type="elementStroke"
+  //       label={t("labels.stroke")}
+  //       color={getFormValue(
+  //         appState.editingElement,
+  //         elements,
+  //         element => element.strokeColor,
+  //         appState.currentItemStrokeColor,
+  //       )}
+  //       onChange={updateData}
+  //     />
+  //   </>
+  // ),
 };
 
 export const actionChangeStrokeColor: Action = {
   name: "changeStrokeColor",
   perform: (elements, appState, value) => {
     return {
-      elements: changeProperty(elements, el => ({
+      elements: changeElementProperty(elements, el => ({
         ...el,
         shape: null,
         strokeColor: value,
@@ -72,7 +102,7 @@ export const actionChangeBackgroundColor: Action = {
   name: "changeBackgroundColor",
   perform: (elements, appState, value) => {
     return {
-      elements: changeProperty(elements, el => ({
+      elements: changeElementProperty(elements, el => ({
         ...el,
         shape: null,
         backgroundColor: value,
@@ -102,7 +132,7 @@ export const actionChangeFillStyle: Action = {
   name: "changeFillStyle",
   perform: (elements, appState, value) => {
     return {
-      elements: changeProperty(elements, el => ({
+      elements: changeElementProperty(elements, el => ({
         ...el,
         shape: null,
         fillStyle: value,
@@ -138,7 +168,7 @@ export const actionChangeStrokeWidth: Action = {
   name: "changeStrokeWidth",
   perform: (elements, appState, value) => {
     return {
-      elements: changeProperty(elements, el => ({
+      elements: changeElementProperty(elements, el => ({
         ...el,
         shape: null,
         strokeWidth: value,
@@ -172,7 +202,7 @@ export const actionChangeSloppiness: Action = {
   name: "changeSloppiness",
   perform: (elements, appState, value) => {
     return {
-      elements: changeProperty(elements, el => ({
+      elements: changeElementProperty(elements, el => ({
         ...el,
         shape: null,
         roughness: value,
@@ -206,7 +236,7 @@ export const actionChangeOpacity: Action = {
   name: "changeOpacity",
   perform: (elements, appState, value) => {
     return {
-      elements: changeProperty(elements, el => ({
+      elements: changeElementProperty(elements, el => ({
         ...el,
         shape: null,
         opacity: value,
@@ -239,7 +269,7 @@ export const actionChangeFontSize: Action = {
   name: "changeFontSize",
   perform: (elements, appState, value) => {
     return {
-      elements: changeProperty(elements, el => {
+      elements: changeElementProperty(elements, el => {
         if (isTextElement(el)) {
           const element: BinderEditorTextElement = {
             ...el,
@@ -287,7 +317,7 @@ export const actionChangeFontFamily: Action = {
   name: "changeFontFamily",
   perform: (elements, appState, value) => {
     return {
-      elements: changeProperty(elements, el => {
+      elements: changeElementProperty(elements, el => {
         if (isTextElement(el)) {
           const element: BinderEditorTextElement = {
             ...el,

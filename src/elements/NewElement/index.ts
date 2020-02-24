@@ -20,6 +20,8 @@ export function newElement(
   strokeWidth: number,
   roughness: number,
   opacity: number,
+  textColor: string,
+  textBoxColor: string,
   width = 0,
   height = 0,
 ) {
@@ -36,6 +38,8 @@ export function newElement(
     strokeWidth,
     roughness,
     opacity,
+    textColor,
+    textBoxColor,
     isSelected: false,
     seed: randomSeed(),
     shape: null as Drawable | Drawable[] | null,

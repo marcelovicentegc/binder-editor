@@ -20,6 +20,8 @@ export function getDefaultAppState(): AppState {
     currentItemRoughness: 1,
     currentItemOpacity: 100,
     currentItemFont: "20px Virgil",
+    currentTextColor: "#000000",
+    currentTextBoxColor: "trasnparent",
     viewBackgroundColor: "#ffffff",
     scrollX: 0,
     scrollY: 0,

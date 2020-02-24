@@ -17,6 +17,8 @@ export type AppState = {
   currentItemRoughness: number;
   currentItemOpacity: number;
   currentItemFont: string;
+  currentTextColor: string;
+  currentTextBoxColor: string;
   viewBackgroundColor: string;
   scrollX: number;
   scrollY: number;

@@ -27,10 +27,6 @@ import {
   getElementAtPosition,
   createScene,
   getElementContainingPosition,
-  hasBackground,
-  hasStroke,
-  hasText,
-  exportCanvas,
   importFromBackend,
   addToLoadedScenes,
   loadedScenes,
@@ -44,14 +40,13 @@ import { BinderEditorElement, BinderEditorElementType } from "./elements/Types";
 import {
   isInputLike,
   debounce,
-  capitalizeString,
   distance,
   distance2d,
   isToolIcon,
 } from "./utils";
 import { KEYS, isArrowKey } from "./keys";
 
-import { findShapeByKey, shapesShortcutKeys, SHAPES } from "./shapes";
+import { findShapeByKey, shapesShortcutKeys } from "./shapes";
 import { createHistory } from "./history";
 
 import ContextMenu from "./components/ContextMenu";
@@ -75,6 +70,7 @@ import {
   actionChangeFontSize,
   actionChangeFontFamily,
   actionChangeViewBackgroundColor,
+  actionChangeTextColor,
   actionClearCanvas,
   actionChangeProjectName,
   actionChangeExportBackground,
@@ -86,12 +82,7 @@ import {
 } from "./actions";
 import { Action, ActionResult } from "./actions/types";
 import { getDefaultAppState } from "./appState";
-import { Island } from "./components/Island";
-import Stack from "./components/Stack";
 import { FixedSideContainer } from "./components/FixedSideContainer";
-import { ToolButton } from "./components/ToolButton";
-import { LockIcon } from "./components/ToolButton/LockIcon";
-import { ExportDialog } from "./components/ExportDialog";
 import { LanguageList } from "./components/LanguageList";
 import { Point } from "roughjs/bin/geometry";
 import { t, languages, setLanguage, getLanguage } from "./i18n";
@@ -105,6 +96,10 @@ import {
   H3,
   TextToolbar,
 } from "@binder/ui";
+import {
+  changeElementProperty,
+  getFormValue,
+} from "./actions/actionProperties";
 
 let { elements } = createScene();
 const { history } = createHistory();
@@ -165,6 +160,8 @@ function pickAppStatePropertiesForHistory(
     currentItemRoughness: appState.currentItemRoughness,
     currentItemOpacity: appState.currentItemOpacity,
     currentItemFont: appState.currentItemFont,
+    currentTextBoxColor: appState.currentTextBoxColor,
+    currentTextColor: appState.currentTextColor,
     viewBackgroundColor: appState.viewBackgroundColor,
     name: appState.name,
   };
@@ -200,6 +197,8 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
     this.actionManager.registerAction(actionChangeSloppiness);
     this.actionManager.registerAction(actionChangeFontSize);
     this.actionManager.registerAction(actionChangeFontFamily);
+    this.actionManager.registerAction(actionChangeTextColor);
+    this.actionManager.registerAction(actionChangeTextColor);
 
     this.actionManager.registerAction(actionChangeViewBackgroundColor);
     this.actionManager.registerAction(actionClearCanvas);
@@ -461,210 +460,6 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
     }
   };
 
-  private renderSelectedShapeActions(elements: readonly BinderEditorElement[]) {
-    const { elementType, editingElement } = this.state;
-    const targetElements = editingElement
-      ? [editingElement]
-      : elements.filter(el => el.isSelected);
-    if (!targetElements.length && elementType === "selection") {
-      return null;
-    }
-
-    return (
-      <Island padding={4}>
-        <div className="panelColumn">
-          {this.actionManager.renderAction(
-            "changeStrokeColor",
-            elements,
-            this.state,
-            this.syncActionResult,
-          )}
-          {(hasBackground(elementType) ||
-            targetElements.some(element => hasBackground(element.type))) && (
-            <>
-              {this.actionManager.renderAction(
-                "changeBackgroundColor",
-                elements,
-                this.state,
-                this.syncActionResult,
-              )}
-
-              {this.actionManager.renderAction(
-                "changeFillStyle",
-                elements,
-                this.state,
-                this.syncActionResult,
-              )}
-            </>
-          )}
-
-          {(hasStroke(elementType) ||
-            targetElements.some(element => hasStroke(element.type))) && (
-            <>
-              {this.actionManager.renderAction(
-                "changeStrokeWidth",
-                elements,
-                this.state,
-                this.syncActionResult,
-              )}
-
-              {this.actionManager.renderAction(
-                "changeSloppiness",
-                elements,
-                this.state,
-                this.syncActionResult,
-              )}
-            </>
-          )}
-
-          {(hasText(elementType) ||
-            targetElements.some(element => hasText(element.type))) && (
-            <>
-              {this.actionManager.renderAction(
-                "changeFontSize",
-                elements,
-                this.state,
-                this.syncActionResult,
-              )}
-
-              {this.actionManager.renderAction(
-                "changeFontFamily",
-                elements,
-                this.state,
-                this.syncActionResult,
-              )}
-            </>
-          )}
-
-          {this.actionManager.renderAction(
-            "changeOpacity",
-            elements,
-            this.state,
-            this.syncActionResult,
-          )}
-
-          {this.actionManager.renderAction(
-            "deleteSelectedElements",
-            elements,
-            this.state,
-            this.syncActionResult,
-          )}
-        </div>
-      </Island>
-    );
-  }
-
-  // private renderShapesSwitcher() {
-  //   return (
-  //     <>
-  //       {SHAPES.map(({ value, icon }, index) => {
-  //         const label = t(`toolBar.${value}`);
-  //         return (
-  //           <ToolButton
-  //             key={value}
-  //             type="radio"
-  //             icon={icon}
-  //             checked={this.state.elementType === value}
-  //             name="editor-current-shape"
-  //             title={`${capitalizeString(label)} — ${
-  //               capitalizeString(value)[0]
-  //             }, ${index + 1}`}
-  //             keyBindingLabel={`${index + 1}`}
-  //             aria-label={capitalizeString(label)}
-  //             aria-keyshortcuts={`${label[0]} ${index + 1}`}
-  //             onChange={() => {
-  //               this.setState({ elementType: value, multiElement: null });
-  //               elements = clearSelection(elements);
-  //               document.documentElement.style.cursor =
-  //                 value === "text" ? CURSOR_TYPE.TEXT : CURSOR_TYPE.CROSSHAIR;
-  //               this.setState({});
-  //             }}
-  //           ></ToolButton>
-  //         );
-  //       })}
-  //     </>
-  //   );
-  // }
-
-  private renderCanvasActions() {
-    return (
-      <Stack.Col gap={4}>
-        <Stack.Row justifyContent={"space-between"}>
-          {this.actionManager.renderAction(
-            "loadScene",
-            elements,
-            this.state,
-            this.syncActionResult,
-          )}
-          {this.actionManager.renderAction(
-            "saveScene",
-            elements,
-            this.state,
-            this.syncActionResult,
-          )}
-          <ExportDialog
-            elements={elements}
-            appState={this.state}
-            actionManager={this.actionManager}
-            syncActionResult={this.syncActionResult}
-            onExportToPng={(exportedElements, scale) => {
-              if (this.canvas)
-                exportCanvas("png", exportedElements, this.canvas, {
-                  exportBackground: this.state.exportBackground,
-                  name: this.state.name,
-                  viewBackgroundColor: this.state.viewBackgroundColor,
-                  scale,
-                });
-            }}
-            onExportToSvg={(exportedElements, scale) => {
-              if (this.canvas) {
-                exportCanvas("svg", exportedElements, this.canvas, {
-                  exportBackground: this.state.exportBackground,
-                  name: this.state.name,
-                  viewBackgroundColor: this.state.viewBackgroundColor,
-                  scale,
-                });
-              }
-            }}
-            onExportToClipboard={(exportedElements, scale) => {
-              if (this.canvas)
-                exportCanvas("clipboard", exportedElements, this.canvas, {
-                  exportBackground: this.state.exportBackground,
-                  name: this.state.name,
-                  viewBackgroundColor: this.state.viewBackgroundColor,
-                  scale,
-                });
-            }}
-            onExportToBackend={exportedElements => {
-              if (this.canvas)
-                exportCanvas(
-                  "backend",
-                  exportedElements.map(element => ({
-                    ...element,
-                    isSelected: false,
-                  })),
-                  this.canvas,
-                  this.state,
-                );
-            }}
-          />
-          {this.actionManager.renderAction(
-            "clearCanvas",
-            elements,
-            this.state,
-            this.syncActionResult,
-          )}
-        </Stack.Row>
-        {this.actionManager.renderAction(
-          "changeViewBackgroundColor",
-          elements,
-          this.state,
-          this.syncActionResult,
-        )}
-      </Stack.Col>
-    );
-  }
-
   public render() {
     const canvasWidth =
       typeof window !== "undefined"
@@ -701,18 +496,33 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
                 <TextToolbar
                   textColor={{
                     menuTitle: "Text color",
-                    onChange: color =>
-                      this.setState({
-                        ...this.state,
-                        currentItemStrokeColor: color,
-                      }),
+                    color: getFormValue(
+                      this.state.editingElement,
+                      elements,
+                      element => element.strokeColor,
+                      this.state.currentItemStrokeColor,
+                    ),
+                    onChange: color => {
+                      this.syncActionResult({
+                        elements: changeElementProperty(elements, el => ({
+                          ...el,
+                          shape: null,
+                          strokeColor: color,
+                        })),
+                        appState: {
+                          ...this.state,
+                          currentItemStrokeColor: color,
+                        },
+                      });
+                    },
                   }}
                   textBoxColor={{
                     menuTitle: "Text box color",
+                    color: this.state.currentTextBoxColor,
                     onChange: color =>
                       this.setState({
                         ...this.state,
-                        currentItemStrokeColor: color,
+                        currentTextBoxColor: color,
                       }),
                   }}
                   textBoxStyle={{ menuTitle: "Text box style" }}
@@ -912,6 +722,8 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
                   this.state.currentItemStrokeWidth,
                   this.state.currentItemRoughness,
                   this.state.currentItemOpacity,
+                  this.state.currentTextColor,
+                  this.state.currentTextBoxColor,
                 );
 
                 if (isTextElement(element)) {
@@ -1679,6 +1491,8 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
                           this.state.currentItemStrokeWidth,
                           this.state.currentItemRoughness,
                           this.state.currentItemOpacity,
+                          this.state.currentTextColor,
+                          this.state.currentTextBoxColor,
                         ),
                         "", // default text
                         this.state.currentItemFont, // default font
