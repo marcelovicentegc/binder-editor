@@ -1,4 +1,5 @@
 import React from "react";
+import { BinderEditorElementType } from "./elements/Types";
 
 Object.defineProperty(Array.prototype, "flat", {
   value: function(depth: number) {

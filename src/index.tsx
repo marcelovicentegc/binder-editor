@@ -39,7 +39,7 @@ import {
 
 import { renderScene } from "./renderer";
 import { AppState, BinderEditorProps } from "./types";
-import { BinderEditorElement } from "./elements/Types";
+import { BinderEditorElement, BinderEditorElementType } from "./elements/Types";
 
 import {
   isInputLike,
@@ -388,7 +388,7 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
         setCursorForShape(shape);
       }
       elements = clearSelection(elements);
-      this.setState({ elementType: shape });
+      this.setState({ elementType: shape as BinderEditorElementType });
       // Undo action
     } else if (event[KEYS.META] && /z/i.test(event.key)) {
       event.preventDefault();
@@ -554,37 +554,37 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
     );
   }
 
-  private renderShapesSwitcher() {
-    return (
-      <>
-        {SHAPES.map(({ value, icon }, index) => {
-          const label = t(`toolBar.${value}`);
-          return (
-            <ToolButton
-              key={value}
-              type="radio"
-              icon={icon}
-              checked={this.state.elementType === value}
-              name="editor-current-shape"
-              title={`${capitalizeString(label)} — ${
-                capitalizeString(value)[0]
-              }, ${index + 1}`}
-              keyBindingLabel={`${index + 1}`}
-              aria-label={capitalizeString(label)}
-              aria-keyshortcuts={`${label[0]} ${index + 1}`}
-              onChange={() => {
-                this.setState({ elementType: value, multiElement: null });
-                elements = clearSelection(elements);
-                document.documentElement.style.cursor =
-                  value === "text" ? CURSOR_TYPE.TEXT : CURSOR_TYPE.CROSSHAIR;
-                this.setState({});
-              }}
-            ></ToolButton>
-          );
-        })}
-      </>
-    );
-  }
+  // private renderShapesSwitcher() {
+  //   return (
+  //     <>
+  //       {SHAPES.map(({ value, icon }, index) => {
+  //         const label = t(`toolBar.${value}`);
+  //         return (
+  //           <ToolButton
+  //             key={value}
+  //             type="radio"
+  //             icon={icon}
+  //             checked={this.state.elementType === value}
+  //             name="editor-current-shape"
+  //             title={`${capitalizeString(label)} — ${
+  //               capitalizeString(value)[0]
+  //             }, ${index + 1}`}
+  //             keyBindingLabel={`${index + 1}`}
+  //             aria-label={capitalizeString(label)}
+  //             aria-keyshortcuts={`${label[0]} ${index + 1}`}
+  //             onChange={() => {
+  //               this.setState({ elementType: value, multiElement: null });
+  //               elements = clearSelection(elements);
+  //               document.documentElement.style.cursor =
+  //                 value === "text" ? CURSOR_TYPE.TEXT : CURSOR_TYPE.CROSSHAIR;
+  //               this.setState({});
+  //             }}
+  //           ></ToolButton>
+  //         );
+  //       })}
+  //     </>
+  //   );
+  // }
 
   private renderCanvasActions() {
     return (

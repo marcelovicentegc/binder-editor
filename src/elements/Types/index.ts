@@ -9,3 +9,12 @@ export type BinderEditorTextElement = BinderEditorElement & {
   actualBoundingBoxAscent?: number;
   baseline: number;
 };
+export type BinderEditorElementType =
+  | "text"
+  | "diamond"
+  | "ellipse"
+  | "rectangle"
+  | "selection"
+  | "arrow"
+  | "line"
+  | "test";

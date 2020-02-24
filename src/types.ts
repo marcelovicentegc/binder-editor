@@ -1,4 +1,4 @@
-import { BinderEditorElement } from "./elements/Types";
+import { BinderEditorElement, BinderEditorElementType } from "./elements/Types";
 
 export type AppState = {
   draggingElement: BinderEditorElement | null;
@@ -7,7 +7,7 @@ export type AppState = {
   // element being edited, but not necessarily added to elements array yet
   //  (e.g. text element when typing into the input)
   editingElement: BinderEditorElement | null;
-  elementType: string;
+  elementType: BinderEditorElementType;
   elementLocked: boolean;
   exportBackground: boolean;
   currentItemStrokeColor: string;

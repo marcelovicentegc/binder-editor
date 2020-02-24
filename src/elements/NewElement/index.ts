@@ -3,11 +3,15 @@ import nanoid from "nanoid";
 import { Drawable } from "roughjs/bin/core";
 import { Point } from "roughjs/bin/geometry";
 
-import { BinderEditorElement, BinderEditorTextElement } from "../Types";
+import {
+  BinderEditorElement,
+  BinderEditorTextElement,
+  BinderEditorElementType,
+} from "../Types";
 import { measureText } from "../../utils";
 
 export function newElement(
-  type: string,
+  type: BinderEditorElementType,
   x: number,
   y: number,
   strokeColor: string,
@@ -19,7 +23,7 @@ export function newElement(
   width = 0,
   height = 0,
 ) {
-  const element = {
+  return {
     id: nanoid(),
     type,
     x,
@@ -37,7 +41,6 @@ export function newElement(
     shape: null as Drawable | Drawable[] | null,
     points: [] as Point[],
   };
-  return element;
 }
 
 export function newTextElement(
@@ -46,7 +49,8 @@ export function newTextElement(
   font: string,
 ) {
   const metrics = measureText(text, font);
-  const textElement: BinderEditorTextElement = {
+
+  return {
     ...element,
     type: "text",
     text: text,
@@ -57,9 +61,7 @@ export function newTextElement(
     width: metrics.width,
     height: metrics.height,
     baseline: metrics.baseline,
-  };
-
-  return textElement;
+  } as BinderEditorTextElement;
 }
 
 export function duplicateElement(element: ReturnType<typeof newElement>) {

@@ -37,7 +37,7 @@ export function serializeAsJSON(
 ): string {
   return JSON.stringify(
     {
-      type: "excalidraw",
+      type: "binder-editor",
       version: 1,
       source: typeof window !== "undefined" && window.location.origin,
       elements: elements.map(({ shape, isSelected, ...el }) => el),
