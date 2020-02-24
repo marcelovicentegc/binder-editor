@@ -169,8 +169,6 @@ button:disabled,
 }
 
 .App-menu_top {
-  -ms-grid-columns: 1fr auto 1fr;
-  grid-template-columns: 1fr auto 1fr;
   -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: flex-start;
@@ -183,11 +181,7 @@ button:disabled,
 }
 
 .App-menu_top > *:first-child {
-  justify-self: flex-start;
-}
-
-.App-menu_top > *:last-child {
-  justify-self: flex-end;
+  justify-self: center;
 }
 
 .App-menu_left {

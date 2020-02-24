@@ -11,6 +11,7 @@
 .FixedSideContainer_side_top {
   left: var(--margin);
   top: 84px;
+  padding-top: 20px;
   right: var(--margin);
   z-index: 2;
 }

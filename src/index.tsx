@@ -103,6 +103,7 @@ import {
   ButtonType,
   Separator,
   H3,
+  TextToolbar,
 } from "@binder/ui";
 
 let { elements } = createScene();
@@ -239,6 +240,7 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
     this.setState({});
     e.preventDefault();
   };
+
   private onCopy = (e: ClipboardEvent) => {
     if (isInputLike(e.target) && !isToolIcon(e.target)) return;
     e.clipboardData?.setData(
@@ -695,51 +697,29 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
         <div className="container">
           <FixedSideContainer side="top">
             <div className="App-menu App-menu_top">
-              <Stack.Col gap={4} align="end">
-                <section
-                  className="App-right-menu"
-                  aria-labelledby="canvas-actions-title"
-                >
-                  <h2 className="visually-hidden" id="canvas-actions-title">
-                    {t("headings.canvasActions")}
-                  </h2>
-                  <Island padding={4}>{this.renderCanvasActions()}</Island>
-                </section>
-                <section
-                  className="App-right-menu"
-                  aria-labelledby="selected-shape-title"
-                >
-                  <h2 className="visually-hidden" id="selected-shape-title">
-                    {t("headings.selectedShapeActions")}
-                  </h2>
-                  {this.renderSelectedShapeActions(elements)}
-                </section>
-              </Stack.Col>
               <section aria-labelledby="shapes-title">
-                <Stack.Col gap={4} align="start">
-                  <Stack.Row gap={1}>
-                    <Island padding={1}>
-                      <h2 className="visually-hidden" id="shapes-title">
-                        {t("headings.shapes")}
-                      </h2>
-                      <Stack.Row gap={1}>
-                        {this.renderShapesSwitcher()}
-                      </Stack.Row>
-                    </Island>
-                    <LockIcon
-                      checked={this.state.elementLocked}
-                      onChange={() => {
-                        this.setState({
-                          elementLocked: !this.state.elementLocked,
-                          elementType: this.state.elementLocked
-                            ? "selection"
-                            : this.state.elementType,
-                        });
-                      }}
-                      title={t("toolBar.lock")}
-                    />
-                  </Stack.Row>
-                </Stack.Col>
+                <TextToolbar
+                  textColor={{
+                    menuTitle: "Text color",
+                    onChange: color =>
+                      this.setState({
+                        ...this.state,
+                        currentItemStrokeColor: color,
+                      }),
+                  }}
+                  textBoxColor={{
+                    menuTitle: "Text box color",
+                    onChange: color =>
+                      this.setState({
+                        ...this.state,
+                        currentItemStrokeColor: color,
+                      }),
+                  }}
+                  textBoxStyle={{ menuTitle: "Text box style" }}
+                />
+                {/* see renderShapesSwitcher to handle text and shapes settings */}
+                {/* see renderCanvasActions to handle binder color settings */}
+                {/* see renderSelectedShapeActions(elements)  */}
               </section>
               <div />
             </div>

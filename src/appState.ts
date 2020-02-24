@@ -10,7 +10,7 @@ export function getDefaultAppState(): AppState {
     resizingElement: null,
     multiElement: null,
     editingElement: null,
-    elementType: "selection",
+    elementType: "text",
     elementLocked: false,
     exportBackground: true,
     currentItemStrokeColor: "#000000",
