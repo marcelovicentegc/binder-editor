@@ -1,5 +1,5 @@
 import { getElementAbsoluteCoords } from "..";
-import { ExcalidrawElement } from "../../Types";
+import { BinderEditorElement } from "../../Types";
 
 const _ce = ({ x, y, w, h }: { x: number; y: number; w: number; h: number }) =>
   ({
@@ -14,7 +14,7 @@ const _ce = ({ x, y, w, h }: { x: number; y: number; w: number; h: number }) =>
     y,
     width: w,
     height: h,
-  } as ExcalidrawElement);
+  } as BinderEditorElement);
 
 describe("getElementAbsoluteCoords", () => {
   it("test x1 coordinate if width is positive or zero", () => {

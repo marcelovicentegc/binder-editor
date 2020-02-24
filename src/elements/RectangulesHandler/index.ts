@@ -1,11 +1,11 @@
-import { ExcalidrawElement } from "../Types";
+import { BinderEditorElement } from "../Types";
 import { SceneScroll } from "../../scene/types";
 import { getArrowAbsoluteBounds } from "../Bounds";
 
 type Sides = "n" | "s" | "w" | "e" | "nw" | "ne" | "sw" | "se";
 
 export function rectangulesHandler(
-  element: ExcalidrawElement,
+  element: BinderEditorElement,
   { scrollX, scrollY }: SceneScroll,
 ) {
   let elementX2 = 0;

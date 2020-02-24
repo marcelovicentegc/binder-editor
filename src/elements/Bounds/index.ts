@@ -1,9 +1,9 @@
-import { ExcalidrawElement } from "../Types";
+import { BinderEditorElement } from "../Types";
 import { rotate } from "../../math";
 import { Drawable } from "roughjs/bin/core";
 import { Point } from "roughjs/bin/geometry";
 
-export function getArrowAbsoluteBounds(element: ExcalidrawElement) {
+export function getArrowAbsoluteBounds(element: BinderEditorElement) {
   if (element.points.length < 2 || !element.shape) {
     const { minX, minY, maxX, maxY } = element.points.reduce(
       (
@@ -100,7 +100,7 @@ export function getArrowAbsoluteBounds(element: ExcalidrawElement) {
 // This set of functions retrieves the absolute position of the 4 points.
 // We can't just always normalize it since we need to remember the fact that an arrow
 // is pointing left or right.
-export function getElementAbsoluteCoords(element: ExcalidrawElement) {
+export function getElementAbsoluteCoords(element: BinderEditorElement) {
   if (element.type === "arrow") {
     return getArrowAbsoluteBounds(element);
   }
@@ -112,7 +112,7 @@ export function getElementAbsoluteCoords(element: ExcalidrawElement) {
   ];
 }
 
-export function getDiamondPoints(element: ExcalidrawElement) {
+export function getDiamondPoints(element: BinderEditorElement) {
   // Here we add +1 to avoid these numbers to be 0
   // otherwise rough.js will throw an error complaining about it
   const topX = Math.floor(element.width / 2) + 1;
@@ -127,7 +127,7 @@ export function getDiamondPoints(element: ExcalidrawElement) {
   return [topX, topY, rightX, rightY, bottomX, bottomY, leftX, leftY];
 }
 
-export function getArrowPoints(element: ExcalidrawElement) {
+export function getArrowPoints(element: BinderEditorElement) {
   const points = element.points;
   const [x1, y1] = points.length >= 2 ? points[points.length - 2] : [0, 0];
   const [x2, y2] = points[points.length - 1];
@@ -146,7 +146,7 @@ export function getArrowPoints(element: ExcalidrawElement) {
   return [x2, y2, x3, y3, x4, y4];
 }
 
-export function getLinePoints(element: ExcalidrawElement) {
+export function getLinePoints(element: BinderEditorElement) {
   const x1 = 0;
   const y1 = 0;
   const x2 = element.width;
@@ -155,7 +155,7 @@ export function getLinePoints(element: ExcalidrawElement) {
   return [x1, y1, x2, y2];
 }
 
-export function getCommonBounds(elements: readonly ExcalidrawElement[]) {
+export function getCommonBounds(elements: readonly BinderEditorElement[]) {
   let minX = Infinity;
   let maxX = -Infinity;
   let minY = Infinity;

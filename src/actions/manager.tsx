@@ -5,7 +5,7 @@ import {
   UpdaterFn,
   ActionFilterFn,
 } from "./types";
-import { ExcalidrawElement } from "../elements/Types";
+import { BinderEditorElement } from "../elements/Types";
 import { AppState } from "../types";
 import { t } from "../i18n";
 
@@ -13,11 +13,11 @@ export class ActionManager implements ActionsManagerInterface {
   actions: { [keyProp: string]: Action } = {};
 
   updater:
-    | ((elements: ExcalidrawElement[], appState: AppState) => void)
+    | ((elements: BinderEditorElement[], appState: AppState) => void)
     | null = null;
 
   setUpdater(
-    updater: (elements: ExcalidrawElement[], appState: AppState) => void,
+    updater: (elements: BinderEditorElement[], appState: AppState) => void,
   ) {
     this.updater = updater;
   }
@@ -28,7 +28,7 @@ export class ActionManager implements ActionsManagerInterface {
 
   handleKeyDown(
     event: KeyboardEvent,
-    elements: readonly ExcalidrawElement[],
+    elements: readonly BinderEditorElement[],
     appState: AppState,
   ) {
     const data = Object.values(this.actions)
@@ -44,7 +44,7 @@ export class ActionManager implements ActionsManagerInterface {
   }
 
   getContextMenuItems(
-    elements: readonly ExcalidrawElement[],
+    elements: readonly BinderEditorElement[],
     appState: AppState,
     updater: UpdaterFn,
     actionFilter: ActionFilterFn = action => action,
@@ -67,7 +67,7 @@ export class ActionManager implements ActionsManagerInterface {
 
   renderAction(
     name: string,
-    elements: readonly ExcalidrawElement[],
+    elements: readonly BinderEditorElement[],
     appState: AppState,
     updater: UpdaterFn,
   ) {

@@ -1,6 +1,6 @@
-import { ExcalidrawElement } from "../Types";
+import { BinderEditorElement } from "../Types";
 
-export function isInvisiblySmallElement(element: ExcalidrawElement): boolean {
+export function isInvisiblySmallElement(element: BinderEditorElement): boolean {
   return element.width === 0 && element.height === 0;
 }
 
@@ -31,7 +31,7 @@ export function getPerfectElementSize(
 }
 
 export function resizePerfectLineForNWHandler(
-  element: ExcalidrawElement,
+  element: BinderEditorElement,
   x: number,
   y: number,
 ) {
@@ -62,8 +62,8 @@ export function resizePerfectLineForNWHandler(
  * @returns {boolean} whether element was normalized
  */
 export function normalizeDimensions(
-  element: ExcalidrawElement | null,
-): element is ExcalidrawElement {
+  element: BinderEditorElement | null,
+): element is BinderEditorElement {
   if (
     !element ||
     (element.width >= 0 && element.height >= 0) ||

@@ -1,12 +1,12 @@
-import { ExcalidrawElement } from "./elements/Types";
+import { BinderEditorElement } from "./elements/Types";
 
 export type AppState = {
-  draggingElement: ExcalidrawElement | null;
-  resizingElement: ExcalidrawElement | null;
-  multiElement: ExcalidrawElement | null;
+  draggingElement: BinderEditorElement | null;
+  resizingElement: BinderEditorElement | null;
+  multiElement: BinderEditorElement | null;
   // element being edited, but not necessarily added to elements array yet
   //  (e.g. text element when typing into the input)
-  editingElement: ExcalidrawElement | null;
+  editingElement: BinderEditorElement | null;
   elementType: string;
   elementLocked: boolean;
   exportBackground: boolean;

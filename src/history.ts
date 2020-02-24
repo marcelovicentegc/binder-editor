@@ -1,5 +1,5 @@
 import { AppState } from "./types";
-import { ExcalidrawElement } from "./elements/Types";
+import { BinderEditorElement } from "./elements/Types";
 
 class SceneHistory {
   private recording = true;
@@ -8,7 +8,7 @@ class SceneHistory {
 
   generateCurrentEntry(
     appState: Partial<AppState>,
-    elements: readonly ExcalidrawElement[],
+    elements: readonly BinderEditorElement[],
   ) {
     return JSON.stringify({
       appState,

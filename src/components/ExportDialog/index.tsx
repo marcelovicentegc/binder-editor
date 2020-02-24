@@ -6,7 +6,7 @@ import { Modal } from "../Modal";
 import { ToolButton } from "../ToolButton";
 import { clipboard, exportFile, link } from "../Icons";
 import { Island } from "../Island";
-import { ExcalidrawElement } from "../../elements/Types";
+import { BinderEditorElement } from "../../elements/Types";
 import { AppState } from "../../types";
 import { exportToCanvas } from "../../scene/export";
 import { ActionsManagerInterface, UpdaterFn } from "../../actions/types";
@@ -29,7 +29,7 @@ const defaultScale =
     : 1;
 
 type ExportCB = (
-  elements: readonly ExcalidrawElement[],
+  elements: readonly BinderEditorElement[],
   scale?: number,
 ) => void;
 
@@ -46,7 +46,7 @@ function ExportModal({
   onCloseRequest,
 }: {
   appState: AppState;
-  elements: readonly ExcalidrawElement[];
+  elements: readonly BinderEditorElement[];
   exportPadding?: number;
   actionManager: ActionsManagerInterface;
   syncActionResult: UpdaterFn;
@@ -230,7 +230,7 @@ export function ExportDialog({
   onExportToBackend,
 }: {
   appState: AppState;
-  elements: readonly ExcalidrawElement[];
+  elements: readonly BinderEditorElement[];
   exportPadding?: number;
   actionManager: ActionsManagerInterface;
   syncActionResult: UpdaterFn;

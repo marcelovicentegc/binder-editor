@@ -1,6 +1,9 @@
 import React from "react";
 import { Action } from "./types";
-import { ExcalidrawElement, ExcalidrawTextElement } from "../elements/Types";
+import {
+  BinderEditorElement,
+  BinderEditorTextElement,
+} from "../elements/Types";
 import { getCommonAttributeOfSelectedElements } from "../scene";
 import { ButtonSelect } from "../components/ButtonSelect";
 import { isTextElement, redrawTextBoundingBox } from "../elements";
@@ -9,8 +12,8 @@ import { AppState } from "../../src/types";
 import { t } from "../i18n";
 
 const changeProperty = (
-  elements: readonly ExcalidrawElement[],
-  callback: (element: ExcalidrawElement) => ExcalidrawElement,
+  elements: readonly BinderEditorElement[],
+  callback: (element: BinderEditorElement) => BinderEditorElement,
 ) => {
   return elements.map(element => {
     if (element.isSelected) {
@@ -22,8 +25,8 @@ const changeProperty = (
 
 const getFormValue = function<T>(
   editingElement: AppState["editingElement"],
-  elements: readonly ExcalidrawElement[],
-  getAttribute: (element: ExcalidrawElement) => T,
+  elements: readonly BinderEditorElement[],
+  getAttribute: (element: BinderEditorElement) => T,
   defaultValue?: T,
 ): T | null {
   return (
@@ -238,7 +241,7 @@ export const actionChangeFontSize: Action = {
     return {
       elements: changeProperty(elements, el => {
         if (isTextElement(el)) {
-          const element: ExcalidrawTextElement = {
+          const element: BinderEditorTextElement = {
             ...el,
             shape: null,
             font: `${value}px ${el.font.split("px ")[1]}`,
@@ -286,7 +289,7 @@ export const actionChangeFontFamily: Action = {
     return {
       elements: changeProperty(elements, el => {
         if (isTextElement(el)) {
-          const element: ExcalidrawTextElement = {
+          const element: BinderEditorTextElement = {
             ...el,
             shape: null,
             font: `${el.font.split("px ")[0]}px ${value}`,

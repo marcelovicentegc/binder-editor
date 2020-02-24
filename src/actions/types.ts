@@ -1,14 +1,14 @@
 import React from "react";
-import { ExcalidrawElement } from "../elements/Types";
+import { BinderEditorElement } from "../elements/Types";
 import { AppState } from "../types";
 
 export type ActionResult = {
-  elements?: ExcalidrawElement[];
+  elements?: BinderEditorElement[];
   appState?: AppState;
 };
 
 type ActionFn = (
-  elements: readonly ExcalidrawElement[],
+  elements: readonly BinderEditorElement[],
   appState: AppState,
   formData: any,
 ) => ActionResult;
@@ -19,7 +19,7 @@ export type ActionFilterFn = (action: Action) => void;
 export interface Action {
   name: string;
   PanelComponent?: React.FC<{
-    elements: readonly ExcalidrawElement[];
+    elements: readonly BinderEditorElement[];
     appState: AppState;
     updateData: (formData: any) => void;
   }>;
@@ -28,7 +28,7 @@ export interface Action {
   keyTest?: (
     event: KeyboardEvent,
     appState: AppState,
-    elements: readonly ExcalidrawElement[],
+    elements: readonly BinderEditorElement[],
   ) => boolean;
   contextItemLabel?: string;
   contextMenuOrder?: number;
@@ -41,18 +41,18 @@ export interface ActionsManagerInterface {
   registerAction: (action: Action) => void;
   handleKeyDown: (
     event: KeyboardEvent,
-    elements: readonly ExcalidrawElement[],
+    elements: readonly BinderEditorElement[],
     appState: AppState,
   ) => ActionResult | null;
   getContextMenuItems: (
-    elements: readonly ExcalidrawElement[],
+    elements: readonly BinderEditorElement[],
     appState: AppState,
     updater: UpdaterFn,
     actionFilter: ActionFilterFn,
   ) => { label: string; action: () => void }[];
   renderAction: (
     name: string,
-    elements: readonly ExcalidrawElement[],
+    elements: readonly BinderEditorElement[],
     appState: AppState,
     updater: UpdaterFn,
   ) => React.ReactElement | null;

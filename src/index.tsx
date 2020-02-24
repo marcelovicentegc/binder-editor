@@ -39,7 +39,7 @@ import {
 
 import { renderScene } from "./renderer";
 import { AppState, BinderEditorProps } from "./types";
-import { ExcalidrawElement } from "./elements/Types";
+import { BinderEditorElement } from "./elements/Types";
 
 import {
   isInputLike,
@@ -461,7 +461,7 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
     }
   };
 
-  private renderSelectedShapeActions(elements: readonly ExcalidrawElement[]) {
+  private renderSelectedShapeActions(elements: readonly BinderEditorElement[]) {
     const { elementType, editingElement } = this.state;
     const targetElements = editingElement
       ? [editingElement]
@@ -926,7 +926,7 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
                 let resizeHandle: ResizeTestType = false;
                 let isResizingElements = false;
                 let draggingOccurred = false;
-                let hitElement: ExcalidrawElement | null = null;
+                let hitElement: BinderEditorElement | null = null;
                 let elementIsAddedToSelection = false;
                 if (this.state.elementType === "selection") {
                   const resizeElement = getElementWithResizeHandler(
@@ -1077,7 +1077,7 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
 
                 let resizeArrowFn:
                   | ((
-                      element: ExcalidrawElement,
+                      element: BinderEditorElement,
                       p1: Point,
                       deltaX: number,
                       deltaY: number,
@@ -1088,7 +1088,7 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
                   | null = null;
 
                 const arrowResizeOrigin = (
-                  element: ExcalidrawElement,
+                  element: BinderEditorElement,
                   p1: Point,
                   deltaX: number,
                   deltaY: number,
@@ -1122,7 +1122,7 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
                 };
 
                 const arrowResizeEnd = (
-                  element: ExcalidrawElement,
+                  element: BinderEditorElement,
                   p1: Point,
                   deltaX: number,
                   deltaY: number,

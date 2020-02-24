@@ -1,7 +1,7 @@
-import { ExcalidrawElement, ExcalidrawTextElement } from "../Types";
+import { BinderEditorElement, BinderEditorTextElement } from "../Types";
 
 export function isTextElement(
-  element: ExcalidrawElement,
-): element is ExcalidrawTextElement {
+  element: BinderEditorElement,
+): element is BinderEditorTextElement {
   return element.type === "text";
 }

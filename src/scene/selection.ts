@@ -1,9 +1,9 @@
-import { ExcalidrawElement } from "../elements/Types";
+import { BinderEditorElement } from "../elements/Types";
 import { getElementAbsoluteCoords } from "../elements";
 
 export function getElementsWithinSelection(
-  elements: readonly ExcalidrawElement[],
-  selection: ExcalidrawElement,
+  elements: readonly BinderEditorElement[],
+  selection: BinderEditorElement,
 ) {
   const [
     selectionX1,
@@ -29,7 +29,7 @@ export function getElementsWithinSelection(
   });
 }
 
-export function clearSelection(elements: readonly ExcalidrawElement[]) {
+export function clearSelection(elements: readonly BinderEditorElement[]) {
   const newElements = [...elements];
 
   newElements.forEach(element => {
@@ -39,11 +39,13 @@ export function clearSelection(elements: readonly ExcalidrawElement[]) {
   return newElements;
 }
 
-export function deleteSelectedElements(elements: readonly ExcalidrawElement[]) {
+export function deleteSelectedElements(
+  elements: readonly BinderEditorElement[],
+) {
   return elements.filter(el => !el.isSelected);
 }
 
-export function getSelectedIndices(elements: readonly ExcalidrawElement[]) {
+export function getSelectedIndices(elements: readonly BinderEditorElement[]) {
   const selectedIndices: number[] = [];
   elements.forEach((element, index) => {
     if (element.isSelected) {
@@ -53,16 +55,17 @@ export function getSelectedIndices(elements: readonly ExcalidrawElement[]) {
   return selectedIndices;
 }
 
-export const someElementIsSelected = (elements: readonly ExcalidrawElement[]) =>
-  elements.some(element => element.isSelected);
+export const someElementIsSelected = (
+  elements: readonly BinderEditorElement[],
+) => elements.some(element => element.isSelected);
 
 /**
  * Returns common attribute (picked by `getAttribute` callback) of selected
  *  elements. If elements don't share the same value, returns `null`.
  */
 export function getCommonAttributeOfSelectedElements<T>(
-  elements: readonly ExcalidrawElement[],
-  getAttribute: (element: ExcalidrawElement) => T,
+  elements: readonly BinderEditorElement[],
+  getAttribute: (element: BinderEditorElement) => T,
 ): T | null {
   const attributes = Array.from(
     new Set(

@@ -1,4 +1,4 @@
-import { ExcalidrawElement } from "../Types";
+import { BinderEditorElement } from "../Types";
 
 import { rectangulesHandler } from "../RectangulesHandler";
 import { SceneScroll } from "../../scene/types";
@@ -6,7 +6,7 @@ import { SceneScroll } from "../../scene/types";
 type RectangulesHandlerRet = keyof ReturnType<typeof rectangulesHandler>;
 
 export function resizeTest(
-  element: ExcalidrawElement,
+  element: BinderEditorElement,
   x: number,
   y: number,
   { scrollX, scrollY }: SceneScroll,
@@ -35,7 +35,7 @@ export function resizeTest(
 }
 
 export function getElementWithResizeHandler(
-  elements: readonly ExcalidrawElement[],
+  elements: readonly BinderEditorElement[],
   { x, y }: { x: number; y: number },
   { scrollX, scrollY }: SceneScroll,
 ) {
@@ -48,14 +48,14 @@ export function getElementWithResizeHandler(
       scrollY,
     });
     return resizeHandle ? { element, resizeHandle } : null;
-  }, null as { element: ExcalidrawElement; resizeHandle: ReturnType<typeof resizeTest> } | null);
+  }, null as { element: BinderEditorElement; resizeHandle: ReturnType<typeof resizeTest> } | null);
 }
 
 /*
  * Returns bi-directional cursor for the element being resized
  */
 export function getCursorForResizingElement(resizingElement: {
-  element: ExcalidrawElement;
+  element: BinderEditorElement;
   resizeHandle: ReturnType<typeof resizeTest>;
 }): string {
   const { element, resizeHandle } = resizingElement;
@@ -94,7 +94,7 @@ export function getCursorForResizingElement(resizingElement: {
 }
 
 export function normalizeResizeHandle(
-  element: ExcalidrawElement,
+  element: BinderEditorElement,
   resizeHandle: RectangulesHandlerRet,
 ): RectangulesHandlerRet {
   if (

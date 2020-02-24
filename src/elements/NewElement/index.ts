@@ -3,7 +3,7 @@ import nanoid from "nanoid";
 import { Drawable } from "roughjs/bin/core";
 import { Point } from "roughjs/bin/geometry";
 
-import { ExcalidrawElement, ExcalidrawTextElement } from "../Types";
+import { BinderEditorElement, BinderEditorTextElement } from "../Types";
 import { measureText } from "../../utils";
 
 export function newElement(
@@ -41,12 +41,12 @@ export function newElement(
 }
 
 export function newTextElement(
-  element: ExcalidrawElement,
+  element: BinderEditorElement,
   text: string,
   font: string,
 ) {
   const metrics = measureText(text, font);
-  const textElement: ExcalidrawTextElement = {
+  const textElement: BinderEditorTextElement = {
     ...element,
     type: "text",
     text: text,

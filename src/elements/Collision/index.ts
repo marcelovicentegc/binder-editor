@@ -1,6 +1,6 @@
 import { distanceBetweenPointAndSegment } from "../../math";
 
-import { ExcalidrawElement } from "../Types";
+import { BinderEditorElement } from "../Types";
 import {
   getDiamondPoints,
   getElementAbsoluteCoords,
@@ -10,7 +10,7 @@ import {
 import { Point } from "roughjs/bin/geometry";
 import { Drawable, OpSet } from "roughjs/bin/core";
 
-function isElementDraggableFromInside(element: ExcalidrawElement): boolean {
+function isElementDraggableFromInside(element: BinderEditorElement): boolean {
   return element.backgroundColor !== "transparent" || element.isSelected;
 }
 
@@ -94,7 +94,7 @@ const hitTestRoughShape = (opSet: OpSet[], x: number, y: number) => {
 };
 
 export function hitTest(
-  element: ExcalidrawElement,
+  element: BinderEditorElement,
   x: number,
   y: number,
 ): boolean {

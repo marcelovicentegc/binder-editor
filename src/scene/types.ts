@@ -1,4 +1,4 @@
-import { ExcalidrawTextElement } from "../elements/Types";
+import { BinderEditorTextElement } from "../elements/Types";
 
 export type SceneState = {
   scrollX: number;
@@ -13,7 +13,7 @@ export type SceneScroll = {
 };
 
 export interface Scene {
-  elements: ExcalidrawTextElement[];
+  elements: BinderEditorTextElement[];
 }
 
 export interface PreviousScene {

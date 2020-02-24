@@ -1,7 +1,7 @@
 import { newElement } from "../NewElement";
 
-export type ExcalidrawElement = ReturnType<typeof newElement>;
-export type ExcalidrawTextElement = ExcalidrawElement & {
+export type BinderEditorElement = ReturnType<typeof newElement>;
+export type BinderEditorTextElement = BinderEditorElement & {
   type: "text";
   font: string;
   text: string;

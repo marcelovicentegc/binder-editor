@@ -1,4 +1,4 @@
-import { ExcalidrawElement } from "../elements/Types";
+import { BinderEditorElement } from "../elements/Types";
 import { getCommonBounds } from "../elements";
 
 const SCROLLBAR_MIN_SIZE = 15;
@@ -7,7 +7,7 @@ export const SCROLLBAR_WIDTH = 6;
 export const SCROLLBAR_COLOR = "rgba(0,0,0,0.3)";
 
 export function getScrollBars(
-  elements: readonly ExcalidrawElement[],
+  elements: readonly BinderEditorElement[],
   canvasWidth: number,
   canvasHeight: number,
   scrollX: number,
@@ -66,7 +66,7 @@ export function getScrollBars(
 }
 
 export function isOverScrollBars(
-  elements: readonly ExcalidrawElement[],
+  elements: readonly BinderEditorElement[],
   x: number,
   y: number,
   canvasWidth: number,

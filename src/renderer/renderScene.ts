@@ -1,7 +1,7 @@
 import { RoughCanvas } from "roughjs/bin/canvas";
 import { RoughSVG } from "roughjs/bin/svg";
 
-import { ExcalidrawElement } from "../elements/Types";
+import { BinderEditorElement } from "../elements/Types";
 import { getElementAbsoluteCoords, rectangulesHandler } from "../elements";
 
 import { roundRect } from "./roundRect";
@@ -15,7 +15,7 @@ import {
 import { renderElement, renderElementToSvg } from "./renderElement";
 
 function isVisibleElement(
-  element: ExcalidrawElement,
+  element: BinderEditorElement,
   scrollX: number,
   scrollY: number,
   canvasWidth: number,
@@ -39,7 +39,7 @@ function isVisibleElement(
 }
 
 export function renderScene(
-  elements: readonly ExcalidrawElement[],
+  elements: readonly BinderEditorElement[],
   rc: RoughCanvas,
   canvas: HTMLCanvasElement,
   sceneState: SceneState,
@@ -173,7 +173,7 @@ export function renderScene(
 
 // This should be only called for exporting purposes
 export function renderSceneToSvg(
-  elements: readonly ExcalidrawElement[],
+  elements: readonly BinderEditorElement[],
   rsvg: RoughSVG,
   svgRoot: SVGElement,
   {

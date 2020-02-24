@@ -1,4 +1,4 @@
-import { ExcalidrawElement } from "../elements/Types";
+import { BinderEditorElement } from "../elements/Types";
 import { hitTest } from "../elements/Collision";
 import { getElementAbsoluteCoords } from "../elements";
 
@@ -15,7 +15,7 @@ export const hasStroke = (type: string) =>
 export const hasText = (type: string) => type === "text";
 
 export function getElementAtPosition(
-  elements: readonly ExcalidrawElement[],
+  elements: readonly BinderEditorElement[],
   x: number,
   y: number,
 ) {
@@ -32,7 +32,7 @@ export function getElementAtPosition(
 }
 
 export function getElementContainingPosition(
-  elements: readonly ExcalidrawElement[],
+  elements: readonly BinderEditorElement[],
   x: number,
   y: number,
 ) {

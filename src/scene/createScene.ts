@@ -1,6 +1,6 @@
-import { ExcalidrawElement } from "../elements/Types";
+import { BinderEditorElement } from "../elements/Types";
 
 export const createScene = () => {
-  const elements: readonly ExcalidrawElement[] = [];
+  const elements: readonly BinderEditorElement[] = [];
   return { elements };
 };

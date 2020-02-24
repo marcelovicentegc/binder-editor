@@ -1,4 +1,4 @@
-import { ExcalidrawElement } from "../elements/Types";
+import { BinderEditorElement } from "../elements/Types";
 import { isTextElement } from "../elements/TypeChecks";
 import {
   getDiamondPoints,
@@ -13,7 +13,7 @@ import { RoughGenerator } from "roughjs/bin/generator";
 import { SVG_NS } from "../utils";
 
 function generateElement(
-  element: ExcalidrawElement,
+  element: BinderEditorElement,
   generator: RoughGenerator,
 ) {
   if (!element.shape) {
@@ -128,7 +128,7 @@ function generateElement(
 }
 
 export function renderElement(
-  element: ExcalidrawElement,
+  element: BinderEditorElement,
   rc: RoughCanvas,
   context: CanvasRenderingContext2D,
 ) {
@@ -183,7 +183,7 @@ export function renderElement(
 }
 
 export function renderElementToSvg(
-  element: ExcalidrawElement,
+  element: BinderEditorElement,
   rsvg: RoughSVG,
   svgRoot: SVGElement,
   offsetX?: number,

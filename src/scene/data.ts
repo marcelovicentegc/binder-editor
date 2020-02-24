@@ -1,4 +1,4 @@
-import { ExcalidrawElement } from "../elements/Types";
+import { BinderEditorElement } from "../elements/Types";
 
 import { getDefaultAppState, cleanAppStateForExport } from "../appState";
 
@@ -26,13 +26,13 @@ if (typeof window !== "undefined") {
 }
 
 interface DataState {
-  elements: readonly ExcalidrawElement[];
+  elements: readonly BinderEditorElement[];
   appState: AppState | null;
   selectedId?: number;
 }
 
 export function serializeAsJSON(
-  elements: readonly ExcalidrawElement[],
+  elements: readonly BinderEditorElement[],
   appState: AppState,
 ): string {
   return JSON.stringify(
@@ -49,7 +49,7 @@ export function serializeAsJSON(
 }
 
 export function calculateScrollCenter(
-  elements: readonly ExcalidrawElement[],
+  elements: readonly BinderEditorElement[],
 ): { scrollX: number; scrollY: number } {
   let [x1, y1, x2, y2] = getCommonBounds(elements);
 
@@ -65,7 +65,7 @@ export function calculateScrollCenter(
 }
 
 export async function saveAsJSON(
-  elements: readonly ExcalidrawElement[],
+  elements: readonly BinderEditorElement[],
   appState: AppState,
 ) {
   const serialized = serializeAsJSON(elements, appState);
@@ -82,7 +82,7 @@ export async function saveAsJSON(
 }
 
 function restore(
-  savedElements: readonly ExcalidrawElement[],
+  savedElements: readonly BinderEditorElement[],
   savedState: AppState | null,
   opts?: { scrollToContent: boolean },
 ): DataState {
@@ -174,7 +174,7 @@ export async function loadFromJSON() {
 }
 
 export async function exportToBackend(
-  elements: readonly ExcalidrawElement[],
+  elements: readonly BinderEditorElement[],
   appState: AppState,
 ) {
   let response;
@@ -210,7 +210,7 @@ export async function exportToBackend(
 }
 
 export async function importFromBackend(id: string | null) {
-  let elements: readonly ExcalidrawElement[] = [];
+  let elements: readonly BinderEditorElement[] = [];
   let appState: AppState = getDefaultAppState();
   const data = await fetch(`${BACKEND_GET}${id}.json`)
     .then(response => {
@@ -236,7 +236,7 @@ export async function importFromBackend(id: string | null) {
 
 export async function exportCanvas(
   type: ExportType,
-  elements: readonly ExcalidrawElement[],
+  elements: readonly BinderEditorElement[],
   canvas: HTMLCanvasElement,
   {
     exportBackground,
@@ -331,7 +331,7 @@ export function restoreFromLocalStorage() {
   if (savedElements) {
     try {
       elements = JSON.parse(savedElements).map(
-        ({ shape, ...element }: ExcalidrawElement) => element,
+        ({ shape, ...element }: BinderEditorElement) => element,
       );
     } catch (e) {
       // Do nothing because elements array is already empty
@@ -351,7 +351,7 @@ export function restoreFromLocalStorage() {
 }
 
 export function saveToLocalStorage(
-  elements: readonly ExcalidrawElement[],
+  elements: readonly BinderEditorElement[],
   state: AppState,
 ) {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(elements));
