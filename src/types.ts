@@ -112,7 +112,7 @@ export type AppState = {
 
 type BaseTextToolbarProps = Omit<
   TextToolbarProps,
-  "textStyle" | "textBoxStyle" | "bodyText" | "withDrawOption"
+  "textStyle" | "bodyText" | "withDrawOption"
 >;
 
 type CustomTextToolbarProps = DeepOmit<

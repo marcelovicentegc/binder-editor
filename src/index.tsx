@@ -525,7 +525,9 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
                         currentTextBoxColor: color,
                       }),
                   }}
-                  textBoxStyle={{ menuTitle: "Text box style" }}
+                  textBoxStyle={{
+                    menuTitle: this.props.toolbarProps.textBoxStyle.menuTitle,
+                  }}
                 />
                 {/* see renderShapesSwitcher to handle text and shapes settings */}
                 {/* see renderCanvasActions to handle binder color settings */}

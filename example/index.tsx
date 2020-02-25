@@ -23,6 +23,9 @@ render(
           textBoxColor: {
             menuTitle: "Text box color",
           },
+          textBoxStyle: {
+            menuTitle: "Text box style",
+          },
         }}
       />
     </TopErrorBoundary>
