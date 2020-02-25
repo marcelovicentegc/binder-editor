@@ -50,22 +50,6 @@ export const actionChangeTextColor: Action = {
       appState: { ...appState, currentTextColor: value },
     };
   },
-  // PanelComponent: ({ elements, appState, updateData }) => (
-  //   <>
-  //     <h3 aria-hidden="true">{t("labels.stroke")}</h3>
-  //     <ColorPicker
-  //       type="elementStroke"
-  //       label={t("labels.stroke")}
-  //       color={getFormValue(
-  //         appState.editingElement,
-  //         elements,
-  //         element => element.strokeColor,
-  //         appState.currentItemStrokeColor,
-  //       )}
-  //       onChange={updateData}
-  //     />
-  //   </>
-  // ),
 };
 
 export const actionChangeStrokeColor: Action = {
