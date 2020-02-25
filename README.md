@@ -28,6 +28,17 @@ const App = () => {
               },
             },
           }}
+          toolbarProps={{
+            textColor: {
+              menuTitle: "Text color",
+            },
+            textBoxColor: {
+              menuTitle: "Text box color",
+            },
+            textBoxStyle: {
+              menuTitle: "Text box style",
+            },
+          }}
         />
       </TopErrorBoundary>
     </ThemeProvider>
