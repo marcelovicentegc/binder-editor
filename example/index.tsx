@@ -16,6 +16,14 @@ render(
             },
           },
         }}
+        toolbarProps={{
+          textColor: {
+            menuTitle: "Text color",
+          },
+          textBoxColor: {
+            menuTitle: "Text box color",
+          },
+        }}
       />
     </TopErrorBoundary>
   </ThemeProvider>,

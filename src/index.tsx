@@ -495,7 +495,7 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
               <section aria-labelledby="shapes-title">
                 <TextToolbar
                   textColor={{
-                    menuTitle: "Text color",
+                    menuTitle: this.props.toolbarProps.textColor.menuTitle,
                     color: getFormValue(
                       this.state.editingElement,
                       elements,
@@ -517,7 +517,7 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
                     },
                   }}
                   textBoxColor={{
-                    menuTitle: "Text box color",
+                    menuTitle: this.props.toolbarProps.textBoxColor.menuTitle,
                     color: this.state.currentTextBoxColor,
                     onChange: color =>
                       this.setState({
