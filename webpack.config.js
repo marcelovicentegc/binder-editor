@@ -1,3 +1,4 @@
+const internalIp = require("internal-ip");
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -5,6 +6,10 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ManifestWebpackPlugin = require("webpack-manifest-plugin");
 
 const PORT = 4000;
+
+console.log(
+  `\n\nWhen done building, your application will be available at http://${internalIp.v4.sync()}:${PORT}\n\n\n`,
+);
 
 module.exports = {
   context: __dirname,

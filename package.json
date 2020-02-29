@@ -3,7 +3,7 @@
   "scripts": {
     "build": "rimraf dist && tsc -p tsconfig.json",
     "postbuild": "cross-env copyfiles --flat src/components/ToolButton/style.css dist/components/ToolButton && copyfiles --flat src/components/Stack/style.css dist/components/Stack && copyfiles --flat src/components/ProjectName/style.css dist/components/ProjectName && copyfiles --flat src/components/Popover/style.css dist/components/Popover && copyfiles --flat src/components/Modal/style.css dist/components/Modal && copyfiles --flat src/components/Island/style.css dist/components/Island && copyfiles --flat src/components/FixedSideContainer/style.css dist/components/FixedSideContainer && copyfiles --flat src/components/ExportDialog/style.css dist/components/ExportDialog && copyfiles --flat src/components/ColorPicker/style.css dist/components/ColorPicker && copyfiles --flat src/components/ContextMenu/style.css dist/components/ContextMenu && copyfiles --flat **/*/*.css dist/components && copyfiles --flat src/styles.css dist && copyfiles --flat ./src/locales/*.json dist/locales",
-    "start": "cross-env NODE_ENV=development webpack-dev-server --progress",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --progress --host 0.0.0.0",
     "fix": "npm run prettier -- --write",
     "prettier": "prettier \"**/*.{js,css,scss,json,md,ts,tsx,html,yml}\" --ignore-path=.eslintignore",
     "test": "npm run test:app",
@@ -57,6 +57,7 @@
     "eslint": "^6.8.0",
     "html-webpack-plugin": "^3.2.0",
     "husky": "4.2.1",
+    "internal-ip": "^5.0.0",
     "lint-staged": "10.0.3",
     "node-sass": "4.13.1",
     "prettier": "1.19.1",
