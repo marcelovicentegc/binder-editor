@@ -1474,6 +1474,220 @@ export class BinderEditor extends React.Component<BinderEditorProps, AppState> {
                   this.setState({});
                 }
               }}
+              onTouchStart={e => {
+                const { x, y } = viewportCoordsToSceneCoords(
+                  {
+                    clientX: e.changedTouches[0].clientX,
+                    clientY: e.changedTouches[0].clientY,
+                  },
+                  this.state,
+                );
+
+                const elementAtPosition = getElementAtPosition(elements, x, y);
+
+                const element =
+                  elementAtPosition && isTextElement(elementAtPosition)
+                    ? elementAtPosition
+                    : newTextElement(
+                        newElement(
+                          "text",
+                          x,
+                          y,
+                          this.state.currentItemStrokeColor,
+                          this.state.currentItemBackgroundColor,
+                          this.state.currentItemFillStyle,
+                          this.state.currentItemStrokeWidth,
+                          this.state.currentItemRoughness,
+                          this.state.currentItemOpacity,
+                          this.state.currentTextColor,
+                          this.state.currentTextBoxColor,
+                        ),
+                        "", // default text
+                        this.state.currentItemFont, // default font
+                      );
+
+                this.setState({ editingElement: element });
+
+                let textX = e.changedTouches[0].clientX;
+                let textY = e.changedTouches[0].clientY;
+
+                if (elementAtPosition && isTextElement(elementAtPosition)) {
+                  elements = elements.filter(
+                    element => element.id !== elementAtPosition.id,
+                  );
+                  this.setState({});
+
+                  textX =
+                    this.state.scrollX +
+                    elementAtPosition.x +
+                    CANVAS_WINDOW_OFFSET_LEFT +
+                    elementAtPosition.width / 2;
+                  textY =
+                    this.state.scrollY +
+                    elementAtPosition.y +
+                    CANVAS_WINDOW_OFFSET_TOP +
+                    elementAtPosition.height / 2 +
+                    84;
+
+                  // x and y will change after calling newTextElement function
+                  element.x = elementAtPosition.x + elementAtPosition.width / 2;
+                  element.y =
+                    elementAtPosition.y + elementAtPosition.height / 2;
+                } else if (!e.altKey) {
+                  const snappedToCenterPosition = this.getTextWysiwygSnappedToCenterPosition(
+                    x,
+                    y,
+                  );
+
+                  if (snappedToCenterPosition) {
+                    element.x = snappedToCenterPosition.elementCenterX;
+                    element.y = snappedToCenterPosition.elementCenterY;
+                    textX = snappedToCenterPosition.wysiwygX;
+                    textY = snappedToCenterPosition.wysiwygY;
+                  }
+                }
+
+                const resetSelection = () => {
+                  this.setState({
+                    draggingElement: null,
+                    editingElement: null,
+                    elementType: "selection",
+                  });
+                };
+
+                textWysiwyg({
+                  initText: element.text,
+                  x: textX,
+                  y: textY,
+                  strokeColor: element.strokeColor,
+                  font: element.font,
+                  opacity: this.state.currentItemOpacity,
+                  onSubmit: text => {
+                    if (text) {
+                      elements = [
+                        ...elements,
+                        {
+                          // we need to recreate the element to update dimensions &
+                          //  position
+                          ...newTextElement(element, text, element.font),
+                          isSelected: true,
+                        },
+                      ];
+                    }
+                    resetSelection();
+                  },
+                  onCancel: () => {
+                    resetSelection();
+                  },
+                });
+              }}
+              onTouchStartCapture={e => {
+                const { x, y } = viewportCoordsToSceneCoords(
+                  {
+                    clientX: e.changedTouches[0].clientX,
+                    clientY: e.changedTouches[0].clientY,
+                  },
+                  this.state,
+                );
+
+                const elementAtPosition = getElementAtPosition(elements, x, y);
+
+                const element =
+                  elementAtPosition && isTextElement(elementAtPosition)
+                    ? elementAtPosition
+                    : newTextElement(
+                        newElement(
+                          "text",
+                          x,
+                          y,
+                          this.state.currentItemStrokeColor,
+                          this.state.currentItemBackgroundColor,
+                          this.state.currentItemFillStyle,
+                          this.state.currentItemStrokeWidth,
+                          this.state.currentItemRoughness,
+                          this.state.currentItemOpacity,
+                          this.state.currentTextColor,
+                          this.state.currentTextBoxColor,
+                        ),
+                        "", // default text
+                        this.state.currentItemFont, // default font
+                      );
+
+                this.setState({ editingElement: element });
+
+                let textX = e.changedTouches[0].clientX;
+                let textY = e.changedTouches[0].clientY;
+
+                if (elementAtPosition && isTextElement(elementAtPosition)) {
+                  elements = elements.filter(
+                    element => element.id !== elementAtPosition.id,
+                  );
+                  this.setState({});
+
+                  textX =
+                    this.state.scrollX +
+                    elementAtPosition.x +
+                    CANVAS_WINDOW_OFFSET_LEFT +
+                    elementAtPosition.width / 2;
+                  textY =
+                    this.state.scrollY +
+                    elementAtPosition.y +
+                    CANVAS_WINDOW_OFFSET_TOP +
+                    elementAtPosition.height / 2 +
+                    84;
+
+                  // x and y will change after calling newTextElement function
+                  element.x = elementAtPosition.x + elementAtPosition.width / 2;
+                  element.y =
+                    elementAtPosition.y + elementAtPosition.height / 2;
+                } else if (!e.altKey) {
+                  const snappedToCenterPosition = this.getTextWysiwygSnappedToCenterPosition(
+                    x,
+                    y,
+                  );
+
+                  if (snappedToCenterPosition) {
+                    element.x = snappedToCenterPosition.elementCenterX;
+                    element.y = snappedToCenterPosition.elementCenterY;
+                    textX = snappedToCenterPosition.wysiwygX;
+                    textY = snappedToCenterPosition.wysiwygY;
+                  }
+                }
+
+                const resetSelection = () => {
+                  this.setState({
+                    draggingElement: null,
+                    editingElement: null,
+                    elementType: "selection",
+                  });
+                };
+
+                textWysiwyg({
+                  initText: element.text,
+                  x: textX,
+                  y: textY,
+                  strokeColor: element.strokeColor,
+                  font: element.font,
+                  opacity: this.state.currentItemOpacity,
+                  onSubmit: text => {
+                    if (text) {
+                      elements = [
+                        ...elements,
+                        {
+                          // we need to recreate the element to update dimensions &
+                          //  position
+                          ...newTextElement(element, text, element.font),
+                          isSelected: true,
+                        },
+                      ];
+                    }
+                    resetSelection();
+                  },
+                  onCancel: () => {
+                    resetSelection();
+                  },
+                });
+              }}
               onDoubleClick={e => {
                 const { x, y } = viewportCoordsToSceneCoords(e, this.state);
 
