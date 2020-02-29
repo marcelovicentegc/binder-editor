@@ -35,7 +35,7 @@
   "peerDependencies": {
     "react": ">=16.12.0",
     "react-dom": ">=16.12.0",
-    "@binder/ui": ">=1.0.21"
+    "@binder/ui": ">=1.0.31"
   },
   "dependencies": {
     "i18next-browser-languagedetector": "4.0.1",
@@ -43,7 +43,7 @@
     "roughjs": "4.0.4"
   },
   "devDependencies": {
-    "@binder/ui": "^1.0.21",
+    "@binder/ui": "^1.0.31",
     "@hot-loader/react-dom": "^16.11.0",
     "@types/jest": "25.1.0",
     "@types/nanoid": "2.1.0",
